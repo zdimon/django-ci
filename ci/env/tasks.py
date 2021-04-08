@@ -5,7 +5,7 @@ from celery.decorators import task
 from django.contrib.auth.models import User
 import subprocess
 from main.utils import run_command
-from .utils import create_dir, clear_work_dir, git_create_branch, git_clone
+from .utils import create_dir, clear_work_dir, git_create_branch, git_clone, nginx_conf, restart, django_conf, frontend_conf
 
 
 
@@ -17,6 +17,10 @@ def generate_env(env_id):
     create_dir(env_id)
     git_clone(env_id)
     git_create_branch(env_id)
+    django_conf(env_id)
+    frontend_conf(env_id)
+    nginx_conf(env_id)
+    restart()
 
 
 def create_env(project_id, user_id):
@@ -34,12 +38,6 @@ def create_env(project_id, user_id):
         env.name = ename
         env.user = user
         env.save()
-        for pp in ProjectProcess.objects.filter(project=project):
-            pname = f'{ename}-{pp.name}'
-            ep = EnvironProcess()
-            ep.name = pname
-            ep.env = env
-            ep.save()
         #generate_env(env.id)
         return True
     

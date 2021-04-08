@@ -5,6 +5,69 @@ from django.conf import settings
 import os
 import git
 
+def nginx_conf(env_id):
+    from .models import Environ, EnvironProcess
+    env = Environ.objects.get(pk=env_id)
+    path = os.path.join(settings.BASE_DIR, 'tpl', 'nginx_vhost.conf')
+    with open(path, 'r') as f:
+        tpl = f.read()
+
+    tpl = tpl.replace('%media_path%', settings.MEDIA_PATH)
+    sname = '%s.%s' % (env.name, settings.DOMAIN)
+    tpl = tpl.replace('%server_name%', sname)
+    dj = EnvironProcess.objects.get(env=env,name='django')
+    tpl = tpl.replace('%port%', str(dj.port))
+    conf_path = os.path.join(
+        settings.BASE_DIR,'env-conf','nginx', env.name)
+    with open(conf_path, 'w+') as f:
+        f.write(tpl) 
+
+       
+def frontend_conf(env_id):
+    from .models import Environ, EnvironProcess
+    env = Environ.objects.get(pk=env_id)
+    try:
+        envp = EnvironProcess.objects.get(env=env,name='frontend')
+        path = os.path.join(settings.BASE_DIR, 'tpl', 'frontend.conf')
+        with open(path, 'r') as f:
+            tpl = f.read()
+        sname = '%s.frontend.%s' % (env.name, settings.DOMAIN)
+        tpl = tpl.replace('%name%', sname)
+        # tpl = tpl.replace('%port%', str(envp.port))
+        prj_dir = os.path.join(settings.WORK_DIR, env.name, envp.path)
+        tpl = tpl.replace('%prj_dir%', prj_dir)
+        tpl = tpl.replace('%ci_dir%', str(settings.BASE_DIR))
+        tpl = tpl.replace('%command%', envp.command)
+        filename = '%s-frontend.conf' % env.name
+        conf_path = os.path.join(
+             settings.BASE_DIR, 'env-conf', 'supervisor', filename)
+        with open(conf_path, 'w+') as f:
+            f.write(tpl)
+    except Exception as e:
+        print(e)
+
+        
+def django_conf(env_id):
+    from .models import Environ, EnvironProcess
+    env = Environ.objects.get(pk=env_id)
+    envp = EnvironProcess.objects.get(env=env,name='django')
+    path = os.path.join(settings.BASE_DIR, 'tpl', 'django.conf')
+    with open(path, 'r') as f:
+        tpl = f.read()
+    sname = '%s.django.%s' % (env.name, settings.DOMAIN)
+    tpl = tpl.replace('%name%', sname)
+    tpl = tpl.replace('%port%', str(envp.port))
+    prj_dir = os.path.join(settings.WORK_DIR, env.name, envp.path)
+    tpl = tpl.replace('%prj_dir%', prj_dir)
+    tpl = tpl.replace('%ci_dir%', str(settings.BASE_DIR))
+    tpl = tpl.replace('%env_dir%', os.path.join(settings.ORIGIN_DIR, env.project.name,'venv'))
+    filename = '%s-django.conf' % env.name
+    conf_path = os.path.join(
+        settings.BASE_DIR, 'env-conf', 'supervisor', filename)
+    with open(conf_path, 'w+') as f:
+        f.write(tpl)
+
+
 def clone_origin(poj_id):
     from project.models import Project
     prj = Project.objects.get(pk=poj_id)
@@ -45,6 +108,31 @@ def clear_work_dir(env):
     bashCommand = "sudo rm -r %s" % env_path
     run_command(bashCommand)
 
+    # remove nginx conf
+    nginx_path = os.path.join(
+        settings.BASE_DIR, 'env-conf', 'nginx', env.name)
+    try:
+        os.remove(nginx_path)
+    except:
+        pass
+
+    # remove supervisor conf
+    filename = '%s-django.conf' % env.name
+    supervisor_conf_path = os.path.join(
+        settings.BASE_DIR, 'env-conf', 'supervisor', filename)
+    try:
+        os.remove(supervisor_conf_path)
+    except:
+        pass
+
+    filename = '%s-frontend.conf' % env.name
+    supervisor_conf_path = os.path.join(
+        settings.BASE_DIR, 'env-conf', 'supervisor', filename)
+    try:
+        os.remove(supervisor_conf_path)
+    except:
+        pass
+
 
 def create_dir(env_id):
     from env.models import Environ
@@ -52,3 +140,10 @@ def create_dir(env_id):
     path = os.path.join(settings.WORK_DIR, env.name)
     print('Creating work dir %s' % path)
     os.mkdir(path)
+
+def restart():
+    print('Restarting supervisor')
+    run_command("sudo service supervisor restart")
+    print('Restarting nginx')
+    run_command("sudo service nginx restart")
+   

@@ -5,9 +5,10 @@ from django.contrib.auth.models import User
 from django.utils.html import mark_safe
 from django.db.models import Max
 from django.db.models.signals import post_save
-from .utils import clear_work_dir
+from .utils import clear_work_dir, restart
 from django.db.models.signals import pre_delete
 from .tasks import generate_env
+from project.models import ProjectProcess
 
 
 class Environ(models.Model):
@@ -16,9 +17,12 @@ class Environ(models.Model):
     user = models.ForeignKey(
         User, null=True, blank=True, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.project.name
+
     @property
     def link_url(self):
-        return "http://%s.%s" % (normalize_email(self.email), settings.DOMAIN)
+        return "http://%s.%s" % (self.name, settings.DOMAIN)
 
     @ property
     def link(self):
@@ -27,6 +31,14 @@ class Environ(models.Model):
     @ classmethod
     def post_create(cls, sender, instance, created, *args, **kwargs):
         if created:
+            for p in ProjectProcess.objects.filter(project=instance.project):
+                ep = EnvironProcess()
+                ep.env = instance
+                ep.envproc = p
+                ep.path = p.path
+                ep.name = p.name
+                ep.command = p.command
+                ep.save()
             generate_env(instance.id)
             #generate_env(instance.id)
             #git_clone(instance.id)
@@ -38,19 +50,27 @@ class EnvironProcess(models.Model):
     name = models.CharField(verbose_name='Название', max_length=250, unique=True)
     status =  models.CharField(verbose_name='Статус', max_length=50, default='создается')
     env = models.ForeignKey(Environ, on_delete=models.CASCADE)
+    path =  models.CharField(verbose_name='Каталог', max_length=250)
+    command =  models.CharField(verbose_name='Каталог', max_length=250, default='')
     port = models.IntegerField(default=8080)
+    envproc = models.ForeignKey('project.ProjectProcess', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
     @classmethod
     def post_create(cls, sender, instance, created, *args, **kwargs):
         if created:
             maxp = EnvironProcess.objects.aggregate(Max('port'))
-            print(maxp)
+            # print(maxp)
             instance.port = maxp["port__max"]+1
             instance.save()
 
 def pre_delete_handler(sender, instance, using, **kwargs):
     clear_work_dir(instance)
+    restart()
 
-post_save.connect(EnvironProcess.post_create, sender=EnvironProcess)
+
+# post_save.connect(EnvironProcess.post_create, sender=EnvironProcess)
 post_save.connect(Environ.post_create, sender=Environ)
 pre_delete.connect(pre_delete_handler, sender=Environ)

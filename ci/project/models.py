@@ -33,9 +33,20 @@ class Project(models.Model):
         return mark_safe(f'<img src="{self.small_image_url}">')
 
 class ProjectProcess(models.Model):
-    name = models.CharField(verbose_name='Название', max_length=60, unique=True)
+    PROC_CHOICES = (
+        ("django", "django"),
+        ("celery", "celery"),
+        ("frontend", "frontend"),
+        ("socket", "socket"),
+    )
+    name = models.CharField(choices=PROC_CHOICES,verbose_name='Название', max_length=60, default='django')
     command =  models.CharField(verbose_name='Команда', max_length=250)
+    path =  models.CharField(verbose_name='Каталог', max_length=250)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    media_path =  models.CharField(verbose_name='Путь к медиа', max_length=250, default='')
+
+    def __str__(self):
+        return self.name
     
 from .tasks import clone_origin, clear_origin
 

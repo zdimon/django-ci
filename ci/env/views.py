@@ -6,6 +6,16 @@ from django.shortcuts import redirect
 from django.contrib import messages
 from .tasks import generate_env, create_env
 
+@login_required
+def list(request):
+    envs = Environ.objects.filter(user=request.user)
+    return render(request, 'env/list.html', {'envs':envs})
+
+@login_required
+def detail(request,id):
+    env = Environ.objects.get(pk=id)
+    return render(request, 'env/detail.html', {'env':env})
+
 
 @login_required
 def pre_create(request,id):
