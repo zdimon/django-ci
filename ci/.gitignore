@@ -6,3 +6,4 @@ venv
 .vscode
 logs/*
 ci-conf/django-ci-supervisor.conf
+__pycache__
