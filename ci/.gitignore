@@ -5,3 +5,4 @@ ci/configs/supervisor
 venv
 .vscode
 logs/*
+ci-conf/django-ci-supervisor.conf
