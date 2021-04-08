@@ -1,0 +1,7 @@
+ci/db.sqlite3
+logs
+ci/configs/supervisor
+.env
+venv
+.vscode
+logs/*

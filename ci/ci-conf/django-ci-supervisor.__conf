@@ -1,0 +1,8 @@
+[program:django-ci]
+directory = /home/zdimon/www/django-ci/ci/
+command = /home/zdimon/www/django-ci/ci/venv/bin/python3 manage.py runserver 0.0.0.0:8081
+autostart = true
+autorestart = true
+environment=PYTHONPATH="/home/zdimon/www/django-ci/ci/venv"
+stderr_logfile=/home/zdimon/www/django-ci/ci/logs/django-ci-err.log
+stdout_logfile=/home/zdimon/www/django-ci/ci/logs/django-ci-out.log
