@@ -1,0 +1,26 @@
+ 
+ {% extends 'base.html' %}
+ {% block content %}
+ <div class="container">
+        <h2>Наши проекты</h2>
+        {% for p in projects %}
+            <div class="row" style="border: 1px solid silver; border-radius: 10px; margin-bottom: 10px; padding: 5px">
+                <div class="col-md-col-2">
+                    {{ p.small_image_tag }}
+                </div>
+                <div class="col-md-8">
+                    <p><strong>{{ p.title }}</strong></p>
+                    {{ p.desc }}
+                </div>
+                <div class="col-md-2">
+                    <a 
+                    class="git-pull btn btn-primary" href="/env/pre_create/{{ p.id }}">Создать рабочую область</a>
+                </div>
+            </div>
+        {% endfor %}
+       
+ 
+
+ </div>
+ 
+    {% endblock %}

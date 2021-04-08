@@ -11,9 +11,7 @@ class FileInline(admin.TabularInline):
 class EnvAdmin(admin.ModelAdmin):
     list_display = ['email', 'link']
 
-@admin.register(Project)
-class ProjectAdmin(admin.ModelAdmin):
-    list_display = ['title', 'small_image_tag']
+
 
 
 @admin.register(Maket)

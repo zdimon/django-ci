@@ -1,3 +1,5 @@
+from django.db.models.deletion import CASCADE
+from project.models import Project
 from django.db.models.signals import pre_delete
 from .tasks import normalize_email
 from django.db import models
@@ -12,31 +14,10 @@ from image_cropping.fields import ImageRatioField, ImageCropField
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import mark_safe
 
-class Project(models.Model):
-    title = models.CharField(verbose_name='Название', max_length=60, unique=True)
-    desc = models.TextField(verbose_name='Описание')
-    image = ImageCropField(upload_to='files')
-    cropping = ImageRatioField('image', '150x150')
 
-    def __str__(self):
-        return self.title
-
-    @property
-    def small_image_url(self):
-        try:
-            return get_thumbnailer(self.image).get_thumbnail({
-                'size': (80, 80),
-                'box': self.cropping,
-                'crop': 'smart',
-            }).url
-        except Exception as e:
-            return SERVER_NAME + 'static/noimage.png'
-
-    @property
-    def small_image_tag(self):
-        return mark_safe(f'<img src="{self.small_image_url}">')
 
 class Env(models.Model):
+    project = models.ForeignKey('project.Project',on_delete=CASCADE)
     email = models.CharField(verbose_name='Логин', max_length=60, unique=True)
     port = models.IntegerField(default=8080)
     user = models.ForeignKey(
@@ -62,6 +43,11 @@ class Env(models.Model):
             nginx_conf(instance.id)
             supervisor_conf(instance.id)
             # restart()
+
+class EnvProcess(models.Model):
+    name = models.CharField(verbose_name='Название', max_length=250, unique=True)
+    status =  models.CharField(verbose_name='Статус', max_length=50, default='создается')
+    env = models.ForeignKey(Env, on_delete=models.CASCADE)
 
 
 def pre_delete_handler(sender, instance, using, **kwargs):

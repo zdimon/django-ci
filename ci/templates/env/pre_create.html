@@ -1,0 +1,22 @@
+ 
+ {% extends 'base.html' %}
+ {% block content %}
+ <div class="container">
+        <h2>Создание рабочей области</h2>
+       <strong>{{ project.title }}</strong>
+       <p class="big-text">
+              После создания, на сервере будет создана директория с вашим проектом и поддомен для тестирования.
+       </p>
+       <p class="big-text">
+              Так же мы предоставим данные для удаленного доступа по ssh или sftp и вы сможете редактировать код прямо на нашем сервере и сразу же смотреть изменения на сайте.
+       </p>
+       <p class="middle-text">
+              Как настроить редактор для работы удаленно описано в <a href="/instr">инструкции</a>
+       </p>
+       <p class="big-text red" >На вашем компьютере разворачивать ничего не прийдется!</p>
+       <p>
+              <a class="btn btn-lg btn-outline-primary btn-block" href="/env/create/{{ project.id }}">Поехали, создавай!</a>              
+       </p>
+ </div>
+ 
+    {% endblock %}

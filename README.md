@@ -26,6 +26,8 @@ Rename configs
  
     cp ci-conf/django-ci-supervisor.__conf ci-conf/django-ci-supervisor.conf
 
+Edit paths in django-ci-supervisor.conf and set yours.
+
 Edit supervisor conf
 
     sudo nano /etc/supervisor/supervisor.conf
@@ -33,6 +35,8 @@ Edit supervisor conf
 Add path to django-ci config and future environments configs.
 
     files = /etc/supervisor/conf.d/*.conf /home/zdimon/ssd/web/django-ci/ci/ci-conf/*.conf  /home/zdimon/ssd/web/django-ci/ci/env-conf/*.conf
+
+
 
 Restart supervisor
 

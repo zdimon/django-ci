@@ -37,6 +37,8 @@ urlpatterns = [
     path('env/merge/<int:id>', merge_master),
     path('', include('account.urls')),
     path('', include('control.urls')),
+    path('project/', include('project.urls')),
+    path('env/', include('env.urls')),
 ]
 
 

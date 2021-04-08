@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'social_django',
     'crispy_forms',
     'easy_thumbnails',
-    'control'
+    'control',
+    'project',
+    'env'
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -139,6 +141,7 @@ STATICFILES_DIRS = [
 load_dotenv()
 
 WORK_DIR = os.getenv('WORK_DIR')
+ORIGIN_DIR = os.getenv('ORIGIN_DIR')
 GIT_URL = os.getenv('GIT_URL')
 DOMAIN = os.getenv('DOMAIN')
 NGINX_PATH = os.getenv('NGINX_PATH')
