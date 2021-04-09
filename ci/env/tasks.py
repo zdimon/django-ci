@@ -8,6 +8,11 @@ from main.utils import run_command
 from .utils import create_dir, git_create_branch, git_clone, nginx_conf, django_conf, frontend_conf
 
 @task()
+def reread():
+    print('Rereading supervisor')
+    run_command("sudo service supervisorctl reread")
+
+@task()
 def restart():
     print('Restarting supervisor')
     run_command("sudo service supervisor restart")
@@ -80,7 +85,7 @@ def clear_work_dir(ename):
         os.remove(supervisor_conf_path)
     except:
         pass 
-    restart()
+    reread()
     
 
 
