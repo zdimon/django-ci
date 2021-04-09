@@ -8,5 +8,5 @@ logs/*
 ci-conf/django-ci-supervisor.conf
 __pycache__
 *.pyc
-ci/media
+media
 ci/env-conf
