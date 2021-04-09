@@ -7,7 +7,12 @@ import subprocess
 from main.utils import run_command
 from .utils import create_dir, git_create_branch, git_clone, nginx_conf, django_conf, frontend_conf
 
-
+@task()
+def restart():
+    print('Restarting supervisor')
+    run_command("sudo service supervisor restart")
+    print('Restarting nginx')
+    run_command("sudo service nginx restart")
 
 
 @task()
@@ -75,11 +80,7 @@ def clear_work_dir(ename):
         os.remove(supervisor_conf_path)
     except:
         pass 
+    restart()
+    
 
 
-@task()
-def restart():
-    print('Restarting supervisor')
-    run_command("sudo service supervisor restart")
-    print('Restarting nginx')
-    run_command("sudo service nginx restart")
