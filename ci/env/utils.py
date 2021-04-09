@@ -93,15 +93,16 @@ def git_create_branch(env_id):
 
 
 def git_clone(env_id):
-    print('Cloning project')
     from .models import Environ
     env = Environ.objects.get(pk=env_id)
     prj = env.project
     path_to = os.path.join(settings.WORK_DIR, env.name)
     path_from = os.path.join(settings.ORIGIN_DIR, prj.name)
     bashCommand = "cp -r %s/. %s" % (path_from, path_to)
+    print('Pulling project')
     g = git.cmd.Git(path_from)
     g.pull()
+    print('Coping project')
     run_command(bashCommand)
     git_create_branch(env_id)
     #copy_frontend(env_id)
