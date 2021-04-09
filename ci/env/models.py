@@ -66,7 +66,7 @@ class EnvironProcess(models.Model):
             instance.save()
 
 def pre_delete_handler(sender, instance, using, **kwargs):
-    clear_work_dir.delay(instance)
+    clear_work_dir.delay(instance.id)
     restart.delay()
 
 

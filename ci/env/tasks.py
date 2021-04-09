@@ -43,8 +43,10 @@ def create_env(project_id, user_id):
         return True
     
 @task()
-def clear_work_dir(env):
+def clear_work_dir(env_id):
     print('Removing work dir')
+    from .models import Environ, EnvironProcess
+    env = Environ.objects.get(pk=env_id)
     env_path = os.path.join(settings.WORK_DIR, env.name)
     bashCommand = "sudo rm -r %s" % env_path
     try:
