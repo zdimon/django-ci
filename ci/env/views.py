@@ -55,9 +55,13 @@ def create(request,id):
 def pre_remove(request,id):
     env = Environ.objects.get(pk=id)
     path = os.path.join(settings.WORK_DIR, env.name)
-    repo = Repo(path)
-    hcommit = repo.head.commit
-    diff = hcommit.diff(None)  
+    diff = []
+    try:
+        repo = Repo(path)
+        hcommit = repo.head.commit
+        diff = hcommit.diff(None) 
+    except:
+        pass 
     # import pdb; pdb.set_trace()
     print(diff)
     return render(request, 'env/pre_remove.html', {'env':env, 'diff': diff})
