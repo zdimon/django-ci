@@ -33,7 +33,7 @@ def generate_env(env_id):
     django_conf(env_id)
     frontend_conf(env_id)
     nginx_conf(env_id)
-    reread()
+    restart()
 
 @task()
 def create_env(project_id, user_id):
@@ -87,7 +87,7 @@ def clear_work_dir(ename):
         os.remove(supervisor_conf_path)
     except:
         pass 
-    reread()
+    restart()
     
 
 

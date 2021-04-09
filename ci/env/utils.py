@@ -99,7 +99,7 @@ def git_clone(env_id):
     path_to = os.path.join(settings.WORK_DIR, env.name)
     path_from = os.path.join(settings.ORIGIN_DIR, prj.name)
     bashCommand = "cp -r %s/. %s" % (path_from, path_to)
-    print('Pulling project')
+    print('Pulling origin')
     g = git.cmd.Git(path_from)
     g.pull()
     print('Coping project')
