@@ -31,7 +31,7 @@ def detail(request,id):
     print(tasks)
     print(tmptasks)
     commits = Commit.objects.filter(user=request.user)
-    return render(request, 'env/detail.html', {'env':env, 'tasks': tasks, 'commits': commits, 'mytasks': mytasks, 'ssh_login':settings.SSH_LOGIN, 'ssh_password': settings.SSH_PASSWORD})
+    return render(request, 'env/detail.html', {'env':env, 'tasks': tasks, 'commits': commits, 'mytasks': mytasks, 'ssh_login':settings.SSH_LOGIN, 'ssh_password': settings.SSH_PASSWORD, 'domain': settings.DOMAIN})
 
 
 @login_required
