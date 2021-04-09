@@ -113,8 +113,10 @@ def clear_work_dir(env):
     print('Removing work dir')
     env_path = os.path.join(settings.WORK_DIR, env.name)
     bashCommand = "sudo rm -r %s" % env_path
-    run_command(bashCommand)
-
+    try:
+        run_command(bashCommand)
+    except:
+        pass
     # remove nginx conf
     nginx_path = os.path.join(
         settings.BASE_DIR, 'env-conf', 'nginx', env.name)
