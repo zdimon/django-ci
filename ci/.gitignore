@@ -7,3 +7,4 @@ venv
 logs/*
 ci-conf/django-ci-supervisor.conf
 __pycache__
+ci/media

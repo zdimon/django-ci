@@ -72,6 +72,13 @@ def clone_origin(poj_id):
     from project.models import Project
     prj = Project.objects.get(pk=poj_id)
     print('Cloning origin from %s' % prj.git)
+    path = os.path.join(settings.ORIGIN_DIR, prj.name)
+    try:
+        os.mkdir(path)
+    except:
+        pass
+    os.chdir(path)
+    run_command("git clone %s %s" % (prj.git,prj.name))
     
 def git_create_branch(env_id):
     from .models import Environ
