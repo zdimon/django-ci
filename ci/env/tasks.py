@@ -5,7 +5,8 @@ from celery.decorators import task
 from django.contrib.auth.models import User
 import subprocess
 from main.utils import run_command
-from .utils import create_dir, clear_work_dir, git_create_branch, git_clone, nginx_conf, restart, django_conf, frontend_conf
+from .utils import create_dir, git_create_branch, git_clone, nginx_conf, django_conf, frontend_conf
+from .tasks import restart, clear_work_dir
 
 
 
@@ -75,7 +76,7 @@ def clear_work_dir(env):
     except:
         pass 
 
-        
+
 @task()
 def restart():
     print('Restarting supervisor')
