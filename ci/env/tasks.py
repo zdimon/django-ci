@@ -68,7 +68,7 @@ def clear_work_dir(ename):
     except:
         pass
 
-    filename = '%s-frontend.conf' % env.name
+    filename = '%s-frontend.conf' % ename
     supervisor_conf_path = os.path.join(
         settings.BASE_DIR, 'env-conf', 'supervisor', filename)
     try:
