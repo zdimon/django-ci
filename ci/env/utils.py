@@ -140,7 +140,7 @@ def clear_work_dir(env):
     try:
         os.remove(supervisor_conf_path)
     except:
-        pass
+        pass 
 
 
 def create_dir(env_id):
