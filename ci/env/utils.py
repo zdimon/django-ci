@@ -12,7 +12,7 @@ def nginx_conf(env_id):
     with open(path, 'r') as f:
         tpl = f.read()
 
-    tpl = tpl.replace('%media_path%', settings.MEDIA_PATH)
+    tpl = tpl.replace('%media_path%', str(settings.MEDIA_PATH))
     sname = '%s.%s' % (env.name, settings.DOMAIN)
     tpl = tpl.replace('%server_name%', sname)
     dj = EnvironProcess.objects.get(env=env,name='django')
@@ -118,7 +118,10 @@ def create_dir(env_id):
     env = Environ.objects.get(pk=env_id)
     path = os.path.join(settings.WORK_DIR, env.name)
     print('Creating work dir %s' % path)
-    os.mkdir(path)
+    try:
+        os.mkdir(path)
+    except:
+        pass
 
 
    
