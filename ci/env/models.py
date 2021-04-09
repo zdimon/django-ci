@@ -38,7 +38,7 @@ class Environ(models.Model):
                 ep.name = p.name
                 ep.command = p.command
                 ep.save()
-            generate_env(instance.id)
+            generate_env.delay(instance.id)
             #generate_env(instance.id)
             #git_clone(instance.id)
             #nginx_conf(instance.id)
