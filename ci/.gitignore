@@ -1,6 +1,5 @@
 ci/db.sqlite3
 logs
-ci/configs/supervisor
 .env
 venv
 .vscode
@@ -9,4 +8,4 @@ ci-conf/django-ci-supervisor.conf
 __pycache__
 *.pyc
 media
-ci/env-conf
+env-conf
