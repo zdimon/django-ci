@@ -43,11 +43,9 @@ def create_env(project_id, user_id):
         return True
     
 @task()
-def clear_work_dir(env_id):
+def clear_work_dir(ename):
     print('Removing work dir')
-    from .models import Environ, EnvironProcess
-    env = Environ.objects.get(pk=env_id)
-    env_path = os.path.join(settings.WORK_DIR, env.name)
+    env_path = os.path.join(settings.WORK_DIR, ename)
     bashCommand = "sudo rm -r %s" % env_path
     try:
         run_command(bashCommand) 
@@ -55,14 +53,14 @@ def clear_work_dir(env_id):
         pass
     # remove nginx conf
     nginx_path = os.path.join(
-        settings.BASE_DIR, 'env-conf', 'nginx', env.name)
+        settings.BASE_DIR, 'env-conf', 'nginx', ename)
     try:
         os.remove(nginx_path)
     except:
         pass
 
     # remove supervisor conf
-    filename = '%s-django.conf' % env.name
+    filename = '%s-django.conf' % ename
     supervisor_conf_path = os.path.join(
         settings.BASE_DIR, 'env-conf', 'supervisor', filename)
     try:
