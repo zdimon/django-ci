@@ -65,12 +65,26 @@ class Task(models.Model):
         ("фронтенд", "фронтенд"),
     )
 
+    HARD = (
+        ("простая", "простая"),
+        ("средняя", "средняя"),
+        ("сложная", "сложная"),
+    )
+
     title = models.CharField(max_length=250)
     type = models.CharField(max_length=50, choices=TYPE, default='фронтенд')
+    hard = models.CharField(max_length=50, choices=TYPE, default='простая')
     project = models.ForeignKey('project.Project', on_delete=models.CASCADE)
     desc = models.TextField()
     is_done = models.BooleanField(default=False)
     budget = models.IntegerField(default=0)
+
+    @property
+    def get_status(self):
+        if self.is_done:
+            return 'не выполнено'
+        else:
+            return 'выполнено'
 
     def __str__(self):
         return self.title

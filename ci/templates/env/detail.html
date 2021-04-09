@@ -119,8 +119,12 @@
                                                 <p slyle="font-weight: strong"><strong>{{ task.title }}</strong></p>
                                                 {{ task.desc }}
                                                 <p>
-                                                Статус: {{ task.get_status }}
+                                                    Статус: {{ task.get_status }}
                                                 </p>
+                                                <p>
+                                                    Сложность: {{ task.hard }}
+                                                </p>
+
                                         </td>
                                         <td>
                                             {% for im in task.file_set.all %}
@@ -165,6 +169,9 @@
                                                 {{ task.desc }}
                                                 <p>
                                                 Статус: {{ task.get_status }}
+                                                </p>
+                                                <p>
+                                                    Сложность: {{ task.hard }}
                                                 </p>
                                         </td>
                                         <td>
