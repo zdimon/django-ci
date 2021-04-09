@@ -56,6 +56,8 @@ def create_env(project_id, user_id):
     
 @task()
 def clear_work_dir(ename):
+    print('Stoping supervisor')
+    run_command('sudo service supervisor stop')
     print('Removing work dir')
     env_path = os.path.join(settings.WORK_DIR, ename)
     bashCommand = "sudo rm -r %s" % env_path
