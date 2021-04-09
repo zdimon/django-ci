@@ -60,6 +60,7 @@ def django_conf(env_id):
     prj_dir = os.path.join(settings.WORK_DIR, env.name, envp.path)
     tpl = tpl.replace('%prj_dir%', prj_dir)
     tpl = tpl.replace('%ci_dir%', str(settings.BASE_DIR))
+    tpl = tpl.replace('%user%', settings.USER)
     tpl = tpl.replace('%env_dir%', os.path.join(settings.ORIGIN_DIR, env.project.name,'venv'))
     filename = '%s-django.conf' % env.name
     conf_path = os.path.join(
@@ -114,7 +115,7 @@ def clear_work_dir(env):
     env_path = os.path.join(settings.WORK_DIR, env.name)
     bashCommand = "sudo rm -r %s" % env_path
     try:
-        run_command(bashCommand)
+        run_command(bashCommand) 
     except:
         pass
     # remove nginx conf

@@ -140,6 +140,7 @@ STATICFILES_DIRS = [
 ]
 load_dotenv()
 
+USER = os.getenv('USER', 'zdimon')
 WORK_DIR = os.getenv('WORK_DIR')
 ORIGIN_DIR = os.getenv('ORIGIN_DIR')
 GIT_URL = os.getenv('GIT_URL')
