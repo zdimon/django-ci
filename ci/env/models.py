@@ -73,4 +73,4 @@ def pre_delete_handler(sender, instance, using, **kwargs):
 
 # post_save.connect(EnvironProcess.post_create, sender=EnvironProcess)
 post_save.connect(Environ.post_create, sender=Environ)
-pre_delete.connect(pre_delete_handler, sender=Environ)
+# pre_delete.connect(pre_delete_handler, sender=Environ)
