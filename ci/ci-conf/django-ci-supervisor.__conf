@@ -6,6 +6,7 @@ autorestart = true
 environment=PYTHONPATH="/home/zdimon/www/django-ci/ci/venv"
 stderr_logfile=/home/zdimon/www/django-ci/ci/logs/django-ci-err.log
 stdout_logfile=/home/zdimon/www/django-ci/ci/logs/django-ci-out.log
+user=zdimon
 
 [program:celery-ci]
 directory = /home/zdimon/www/django-ci/ci/
@@ -15,3 +16,4 @@ autorestart = true
 environment=PYTHONPATH="/home/zdimon/www/django-ci/ci/venv"
 stderr_logfile=/home/zdimon/www/django-ci/ci/logs/celery-ci-err.log
 stdout_logfile=/home/zdimon/www/django-ci/ci/logs/celery-ci-out.log
+user=zdimon
