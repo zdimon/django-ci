@@ -22,8 +22,12 @@
                 >
                     <td scope="col">#</td>
                     <td scope="col">
-                        {{ e.project.small_image_tag }}
-                        <strong>{{ e.project.title }}</strong>
+                        <a href="/env/detail/{{ e.id }}">
+                            {{ e.project.small_image_tag }}
+                        </a>
+                        <a href="/env/detail/{{ e.id }}">
+                            <strong>{{ e.project.title }}</strong>
+                        </a>
                     </td>
                     <td scope="col">{{ e.status }}</td>
                     <td scope="col">
