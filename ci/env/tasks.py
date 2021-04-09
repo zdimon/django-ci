@@ -11,6 +11,8 @@ from .utils import create_dir, git_create_branch, git_clone, nginx_conf, django_
 def reread():
     print('Rereading supervisor')
     run_command("sudo service supervisorctl reread")
+    print('Restarting nginx')
+    run_command("sudo service nginx restart")
 
 @task()
 def restart():
@@ -31,7 +33,7 @@ def generate_env(env_id):
     django_conf(env_id)
     frontend_conf(env_id)
     nginx_conf(env_id)
-    restart()
+    reread()
 
 @task()
 def create_env(project_id, user_id):
