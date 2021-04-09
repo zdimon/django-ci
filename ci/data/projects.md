@@ -11,3 +11,12 @@ ij
 git@github.com:zdimon/ij.git
 
 
+Сайт продажи печати pressa.ru
+
+Торговля печатными изданиями онлайн.
+
+Технологии: Django+React.
+
+git@github.com:zdimon/pressa-besa.git
+
+

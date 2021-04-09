@@ -24,7 +24,7 @@
                     <h4 class=""> {{ env.project.title }} </h4>
                     <ul class="list-group">
                         <li class="list-group-item">
-                        <a target=_blank href="{{ env.link_url }}">Ссылка для тестирования </a>
+                        <a class="btn btn-primary" target=_blank href="{{ env.link_url }}">Ссылка для тестирования </a>
                         </li>
                         <li class="list-group-item">
                         <a target=_blank href="/instr">Инструкция по работе в Vscode </a>
@@ -34,10 +34,10 @@
                             Доступы по ssh или sftp
                         </li>
                         <li class="list-group-item">
-                            Логин: student
+                            Логин: {{ ssh_login }}
                         </li>
                         <li class="list-group-item">
-                            Пароль: 12333321
+                            Пароль: {{ ssh_password }}
                         </li>
                         <li class="list-group-item">
                             Домен: wezom.webmonstr.com
