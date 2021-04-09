@@ -110,38 +110,7 @@ def git_clone(env_id):
     #restart()
 
 
-def clear_work_dir(env):
-    print('Removing work dir')
-    env_path = os.path.join(settings.WORK_DIR, env.name)
-    bashCommand = "sudo rm -r %s" % env_path
-    try:
-        run_command(bashCommand) 
-    except:
-        pass
-    # remove nginx conf
-    nginx_path = os.path.join(
-        settings.BASE_DIR, 'env-conf', 'nginx', env.name)
-    try:
-        os.remove(nginx_path)
-    except:
-        pass
 
-    # remove supervisor conf
-    filename = '%s-django.conf' % env.name
-    supervisor_conf_path = os.path.join(
-        settings.BASE_DIR, 'env-conf', 'supervisor', filename)
-    try:
-        os.remove(supervisor_conf_path)
-    except:
-        pass
-
-    filename = '%s-frontend.conf' % env.name
-    supervisor_conf_path = os.path.join(
-        settings.BASE_DIR, 'env-conf', 'supervisor', filename)
-    try:
-        os.remove(supervisor_conf_path)
-    except:
-        pass 
 
 
 def create_dir(env_id):
@@ -151,9 +120,5 @@ def create_dir(env_id):
     print('Creating work dir %s' % path)
     os.mkdir(path)
 
-def restart():
-    print('Restarting supervisor')
-    run_command("sudo service supervisor restart")
-    print('Restarting nginx')
-    run_command("sudo service nginx restart")
+
    

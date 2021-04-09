@@ -5,9 +5,8 @@ from django.contrib.auth.models import User
 from django.utils.html import mark_safe
 from django.db.models import Max
 from django.db.models.signals import post_save
-from .utils import clear_work_dir, restart
 from django.db.models.signals import pre_delete
-from .tasks import generate_env
+from .tasks import generate_env, clear_work_dir, restart
 from project.models import ProjectProcess
 
 
@@ -67,8 +66,8 @@ class EnvironProcess(models.Model):
             instance.save()
 
 def pre_delete_handler(sender, instance, using, **kwargs):
-    clear_work_dir(instance)
-    restart()
+    clear_work_dir.delay(instance)
+    restart.delay()
 
 
 # post_save.connect(EnvironProcess.post_create, sender=EnvironProcess)

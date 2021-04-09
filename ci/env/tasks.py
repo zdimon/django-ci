@@ -22,7 +22,7 @@ def generate_env(env_id):
     nginx_conf(env_id)
     restart()
 
-
+@task()
 def create_env(project_id, user_id):
     from project.models import Project, ProjectProcess
     from .models import Environ, EnvironProcess
@@ -41,4 +41,44 @@ def create_env(project_id, user_id):
         #generate_env(env.id)
         return True
     
+@task()
+def clear_work_dir(env):
+    print('Removing work dir')
+    env_path = os.path.join(settings.WORK_DIR, env.name)
+    bashCommand = "sudo rm -r %s" % env_path
+    try:
+        run_command(bashCommand) 
+    except:
+        pass
+    # remove nginx conf
+    nginx_path = os.path.join(
+        settings.BASE_DIR, 'env-conf', 'nginx', env.name)
+    try:
+        os.remove(nginx_path)
+    except:
+        pass
 
+    # remove supervisor conf
+    filename = '%s-django.conf' % env.name
+    supervisor_conf_path = os.path.join(
+        settings.BASE_DIR, 'env-conf', 'supervisor', filename)
+    try:
+        os.remove(supervisor_conf_path)
+    except:
+        pass
+
+    filename = '%s-frontend.conf' % env.name
+    supervisor_conf_path = os.path.join(
+        settings.BASE_DIR, 'env-conf', 'supervisor', filename)
+    try:
+        os.remove(supervisor_conf_path)
+    except:
+        pass 
+
+        
+@task()
+def restart():
+    print('Restarting supervisor')
+    run_command("sudo service supervisor restart")
+    print('Restarting nginx')
+    run_command("sudo service nginx restart")
