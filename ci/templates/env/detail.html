@@ -66,7 +66,7 @@
                             </div>
                         </li>
                         <li class="list-group-item">
-                            <a class="btn btn-lg btn-outline-warning btn-block" href="/env/merge/{{ env.id }}">Пересоздать область</a>                            
+                            <a class="btn btn-lg btn-outline-danger btn-block" href="/env/pre_remove/{{ env.id }}">Удалить область</a>                            
                         </li>
                         <li class="list-group-item">
                             После пересоздания мы сделаем новую копию проекта а старая будет удалена и вы потеряете все неподтвержденные изменения!!! Поэтому перед нажатием желательно скопировать те файлы, которые вы меняли себе на компьютер.                           
@@ -191,4 +191,8 @@
     </div>
   </div>
  
+    {% endblock %}
+
+    {% block js %} 
+    <script src="/static/js/control.js"></script>
     {% endblock %}

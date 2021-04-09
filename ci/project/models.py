@@ -26,7 +26,7 @@ class Project(models.Model):
                 'crop': 'smart',
             }).url
         except Exception as e:
-            return SERVER_NAME + 'static/noimage.png'
+            return '/static/noimage.png'
 
     @property
     def small_image_tag(self):

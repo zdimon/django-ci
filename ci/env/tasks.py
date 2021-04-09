@@ -34,6 +34,8 @@ def generate_env(env_id):
     frontend_conf(env_id)
     nginx_conf(env_id)
     restart()
+    env.status = 'активная'
+    env.save()
 
 @task()
 def create_env(project_id, user_id):

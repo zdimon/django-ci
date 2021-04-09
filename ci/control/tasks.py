@@ -4,26 +4,24 @@ import git
 from celery.decorators import task
 import subprocess
 from main.utils import run_command, normalize_email
-from main.models import Env
+from env.models import Environ
 from git import Repo
 
 
 def git_pull(env_id):
-    env = Env.objects.get(pk=env_id)
-    path = os.path.join(settings.WORK_DIR, normalize_email(
-        env.email), 'pressa-besa')
+    env = Environ.objects.get(pk=env_id)
+    path = os.path.join(settings.WORK_DIR, env.name)
     os.chdir(path)
     out = run_command('git pull origin master')
     return out
 
 
 def git_commit(env_id):
-    env = Env.objects.get(pk=env_id)
-    path = os.path.join(settings.WORK_DIR, normalize_email(
-        env.email), 'pressa-besa')
+    env = Environ.objects.get(pk=env_id)
+    path = os.path.join(settings.WORK_DIR, env.name)
     repo = Repo(path)
     repo.git.add(update=True)
-    repo.index.commit('commit from '+env.email)
+    repo.index.commit('commit from '+env.user.username)
     return {"error": None, "output": 'Done!'}
     # os.chdir(path)
     # command = "git add ."
@@ -36,9 +34,8 @@ def git_commit(env_id):
 
 
 def git_push(env_id):
-    env = Env.objects.get(pk=env_id)
-    path = os.path.join(settings.WORK_DIR, normalize_email(
-        env.email), 'pressa-besa')
+    env = Environ.objects.get(pk=env_id)
+    path = os.path.join(settings.WORK_DIR, env.name)
     os.chdir(path)
     bname = 'devel-%s' % normalize_email(env.email)
     command = 'git push --set-upstream origin %s' % bname
@@ -48,18 +45,16 @@ def git_push(env_id):
 
 
 def git_status(env_id):
-    env = Env.objects.get(pk=env_id)
-    path = os.path.join(settings.WORK_DIR, normalize_email(
-        env.email), 'pressa-besa')
+    env = Environ.objects.get(pk=env_id)
+    path = os.path.join(settings.WORK_DIR, env.name)
     os.chdir(path)
     out = run_command('git status')
     return out
 
 
 def git_diff(env_id):
-    env = Env.objects.get(pk=env_id)
-    path = os.path.join(settings.WORK_DIR, normalize_email(
-        env.email), 'pressa-besa')
+    env = Environ.objects.get(pk=env_id)
+    path = os.path.join(settings.WORK_DIR, env.name)
     os.chdir(path)
     out = run_command('git diff')
     return out

@@ -13,6 +13,7 @@ from project.models import ProjectProcess
 class Environ(models.Model):
     project = models.ForeignKey('project.Project',on_delete=models.CASCADE)
     name = models.CharField(verbose_name='Название рабочей области', help_text=_('должно быть уникальным, поэтому мы добавили ваш логин и id проекта'), max_length=60, unique=True)
+    status = models.CharField(verbose_name='Статус', max_length=60, default='создается')
     user = models.ForeignKey(
         User, null=True, blank=True, on_delete=models.CASCADE)
 
@@ -67,7 +68,7 @@ class EnvironProcess(models.Model):
 
 def pre_delete_handler(sender, instance, using, **kwargs):
     clear_work_dir.delay(instance.name)
-    restart.delay()
+    
 
 
 # post_save.connect(EnvironProcess.post_create, sender=EnvironProcess)

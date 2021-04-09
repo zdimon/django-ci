@@ -1,6 +1,6 @@
 server { 
     listen 80;
-    server_name zdimon-1.local;
+    server_name zdimon77-1.local;
 
     location / {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -11,7 +11,14 @@ server {
 
     location /media {
         autoindex on;
-        alias /home/zdimon/Desktop/work/pressa-besa/media/;
+        alias None;
+    }
+
+    error_page 502 /502.html;
+    location = /502.html {
+
+        root  /home/zdimon/ssd/web/django-ci/ci/error_pages;
+
     }
 
    

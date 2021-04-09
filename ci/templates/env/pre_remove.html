@@ -1,0 +1,30 @@
+ 
+ {% extends 'base.html' %}
+ {% block content %}
+ <div class="container">
+        <h2>Удаление рабочей области {{ env.project.title }}</h2>
+      
+       {% if diff %}
+       <p class="big-text red">
+              Внимание!  Рабочая область содержит измененные файлы!!!
+              {% for f in diff %}
+                     <p>
+                            {{ f }}
+                     </p>
+              {% endfor %}
+       </p>
+       <p class = "text-big red">
+              Вы уверены что хотите их удалить?
+       </p>
+       {% else %}
+       <p class="big-text">
+              Рабочая область не содержит измененных файлов и вы можете ее удалить.
+       </p>
+       {% endif %}
+      
+       <p>
+              <a class="btn btn-lg btn-outline-danger btn-block" href="/env/remove/{{ env.id }}">Удаляй!</a>              
+       </p>
+ </div>
+ 
+    {% endblock %}
