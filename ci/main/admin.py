@@ -21,14 +21,15 @@ class MaketAdmin(admin.ModelAdmin):
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ['title', 'desc', 'is_done', 'budget']
+    list_display = ['title', 'desc', 'is_done', 'project', 'budget']
     inlines = [FileInline, ]
     list_editable = ['budget']
+    list_filter = ['project']
 
 
 @admin.register(Task2User)
 class Task2UserAdmin(admin.ModelAdmin):
-    list_display = ['user', 'task']
+    list_display = ['user', 'task', 'project']
 
 
 @admin.register(Commit)

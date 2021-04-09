@@ -13,7 +13,13 @@
                 </tr>
             </thead>
             {% for e in envs %}
-                <tr>
+                <tr 
+                {% if e.status == 'создается' %}
+                class="bg-red"
+                {% else %}
+                class="bg-green"
+                {% endif %}
+                >
                     <td scope="col">#</td>
                     <td scope="col">
                         {{ e.project.small_image_tag }}
@@ -30,6 +36,11 @@
                 </tr>
             {% endfor %}  
         </table>
+        {% if not envs %}
+        <div class="alert alert-danger" role="alert">
+            Вы пока не создали ни одну область из раздела "Проекты".
+        </div>            
+        {% endif %}
         
       
  </div>

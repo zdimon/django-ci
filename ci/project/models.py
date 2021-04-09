@@ -51,7 +51,7 @@ class ProjectProcess(models.Model):
 from .tasks import clone_origin, clear_origin
 
 def post_create_handler(sender, instance, using, **kwargs):
-    clone_origin(instance.pk)
+    clone_origin.delay(instance.pk)
 
 def pre_delete_handler(sender, instance, using, **kwargs):
     clear_origin(instance.pk)    

@@ -15,7 +15,7 @@ from django.contrib.auth import logout
 from django.contrib import messages
 import os
 from django.contrib.auth.decorators import login_required
-
+from env.models import Environ
 
 def logout_view(request):
     logout(request)
@@ -52,7 +52,7 @@ def env(request):
 
 def index(request):
     if request.user.is_authenticated:
-        return redirect('/env')
+        return redirect('/project/list')
     projects = Project.objects.all()
     return render(request, 'index.html', {"projects": projects})
 
@@ -88,32 +88,37 @@ def info(request):
 
 def take_task(request, id):
     task = Task.objects.get(pk=id)
+    env = Environ.objects.get(project=task.project,user=request.user)
     try:
         Task2User.objects.get(user=request.user, task=task)
         messages.success(
             request, 'Эта задача уже в работе!')
-        return redirect('/tasks')
+        return redirect('/env/detail/%s#mytask' % env.id)
     except:
         t2u = Task2User()
         t2u.user = request.user
         t2u.task = task
+        t2u.project = env.project
         t2u.save()
         messages.success(
-            request, 'Задача взята в работу и помещена в раздел Рабочая область')
-        return redirect('/tasks')
+            request, 'Задача взята в работу и помещена в раздел "Взятые задачи"')
+        return redirect('/env/detail/%s#mytask' % env.id)
 
 
 def del_task(request, id):
-    task = Task2User.objects.get(pk=id)
-    if task.user == request.user:
-        task.delete()
+    task = Task.objects.get(pk=id)
+    t2u = Task2User.objects.get(task=task,user=request.user)
+    env = Environ.objects.get(project=task.project,user=request.user)
+    if t2u.user == request.user:
+        t2u.delete()
         messages.success(
             request, 'Задача удалена')
-    return redirect('/env')
+    return redirect('/env/detail/%s#mytask' % env.id)
 
 
 def done_task(request, id):
-    task = Task2User.objects.get(pk=id)
+    t = Task.objects.get(pk=id)
+    task = Task2User.objects.get(task=t,user=request.user)
     return render(request, 'done_task.html', {"task": task})
 
 
@@ -122,8 +127,8 @@ def end_task(request, id):
     #origin = repo.remote(name='origin')
     # origin.push()
     task = Task2User.objects.get(pk=id)
+    env = Environ.objects.get(user=request.user,project=task.project)
     if task.user == request.user:
-        env = Env.objects.get(user=request.user)
         git_push.delay(env.id, id)
         task.is_done = True
         task.save()
@@ -134,7 +139,7 @@ def end_task(request, id):
         c.save()
         messages.success(
             request, 'Спасибо! Ваши изменения зафиксированы и отправлены на проверку.')
-    return redirect('/env')
+    return redirect('/env/detail/%s' % env.id)
 
 def merge_master(request, id):
     git_merge_with_master.delay(id)

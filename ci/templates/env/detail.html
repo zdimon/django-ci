@@ -69,7 +69,7 @@
                             <a class="btn btn-lg btn-outline-danger btn-block" href="/env/pre_remove/{{ env.id }}">Удалить область</a>                            
                         </li>
                         <li class="list-group-item">
-                            После пересоздания мы сделаем новую копию проекта а старая будет удалена и вы потеряете все неподтвержденные изменения!!! Поэтому перед нажатием желательно скопировать те файлы, которые вы меняли себе на компьютер.                           
+                            После удаления вы всегда можете создать ее заново <a href="/project/list">тут</a>.                           
                         </li>
                     </ul>
                     </div>
@@ -82,7 +82,12 @@
                         <li class="nav-item">
                             <a 
                             aria-controls="task" aria-selected="true"
-                            id="task-tab" data-toggle="tab" href="#task" class="nav-link active" >Задачи</a>
+                            id="task-tab" data-toggle="tab" href="#task" class="nav-link active" >Задачи на выполнение</a>
+                        </li>
+                        <li class="nav-item">
+                            <a 
+                            aria-controls="mytask" aria-selected="true"
+                            id="mytask-tab" data-toggle="tab" href="#mytask" class="nav-link" >Взятые задачи</a>
                         </li>
                         <li class="nav-item">
                             <a 
@@ -93,6 +98,8 @@
 
 
                         <div class="tab-content">
+
+                            <!---  на выполнение  ------>
                             <div class="tab-pane fade show active" id="task" role="tabpanel" aria-labelledby="home-tab">
                                 <table class="table">
                                 <thead>
@@ -106,16 +113,64 @@
 
                                     {% for task in tasks %}
                                         <tr>
-                                        <th scope="row">{{ task.task.id }}</th>
+                                        <th scope="row">{{ task.id }}
+
+                                         
+                                        </th>
                                         <td>
-                                                <p slyle="font-weight: strong"><strong>{{ task.task.title }}</strong></p>
-                                                {{ task.task.desc }}
+                                                <p slyle="font-weight: strong"><strong>{{ task.title }}</strong></p>
+                                                {{ task.desc }}
                                                 <p>
                                                 Статус: {{ task.get_status }}
                                                 </p>
                                         </td>
                                         <td>
-                                            {% for im in task.task.file_set.all %}
+                                            {% for im in task.file_set.all %}
+                                                <p>
+                                                <p>{{ im.title }}</p>
+                                                <a target=_blank href="{{im.image.url}}">
+                                                    <img title="{{ im.title }}" src="{{im.small_image_url}}" />
+                                                </a>
+                                                </p>
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-md btn-outline-primary btn-block" href="/task/take/{{ task.id }}">Взять в работу</a>
+                                            
+                                        </td>
+                                        </tr>
+                                    {% endfor %}
+
+                                </table>
+                            </div>
+
+
+                            <!---  в работе  ------>
+
+
+                            <div class="tab-pane fade show" id="mytask" role="tabpanel" aria-labelledby="home-tab">
+                                <table class="table">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Описание</th>
+                                    <th scope="col">Изображения</th>
+                                    <th scope="col">Действия</th>
+                                    </tr>
+                                </thead>
+
+                                    {% for task in mytasks %}
+                                        <tr>
+                                        <th scope="row">{{ task.id }}</th>
+                                        <td>
+                                                <p slyle="font-weight: strong"><strong>{{ task.title }}</strong></p>
+                                                {{ task.desc }}
+                                                <p>
+                                                Статус: {{ task.get_status }}
+                                                </p>
+                                        </td>
+                                        <td>
+                                            {% for im in task.file_set.all %}
                                                 <p>
                                                 <p>{{ im.title }}</p>
                                                 <a target=_blank href="{{im.image.url}}">
@@ -127,12 +182,15 @@
                                         <td>
                                             <a class="btn btn-lg btn-outline-primary btn-block" href="/task/done/{{ task.id }}">Выполнено</a>
                                             <a class="btn btn-lg btn-outline-warning btn-block" href="/task/del/{{ task.id }}">Отказаться</a>
+                                            
                                         </td>
                                         </tr>
                                     {% endfor %}
 
                                 </table>
                             </div>
+
+
                             <div class="tab-pane fade show" id="commit" role="tabpanel" aria-labelledby="home-tab">
                                 <table class="table">
                                 <thead>

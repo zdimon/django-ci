@@ -59,7 +59,15 @@ pre_delete.connect(pre_delete_handler, sender=Env)
 
 
 class Task(models.Model):
+
+    TYPE = (
+        ("бекенд", "бекенд"),
+        ("фронтенд", "фронтенд"),
+    )
+
     title = models.CharField(max_length=250)
+    type = models.CharField(max_length=50, choices=TYPE, default='фронтенд')
+    project = models.ForeignKey('project.Project', on_delete=models.CASCADE)
     desc = models.TextField()
     is_done = models.BooleanField(default=False)
     budget = models.IntegerField(default=0)
@@ -111,6 +119,7 @@ class Task2User(models.Model):
     task = models.ForeignKey(Task, verbose_name=_(
         "Задача"), on_delete=models.CASCADE)
     is_done = models.BooleanField(default=False)
+    project = models.ForeignKey('project.Project', on_delete=models.CASCADE)
 
     @property
     def get_status(self):

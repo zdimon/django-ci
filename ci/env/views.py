@@ -8,6 +8,7 @@ from .tasks import generate_env, create_env
 from git import Repo
 import os
 from django.conf import settings
+from main.models import Task2User, Commit, Task
 
 
 @login_required
@@ -18,7 +19,19 @@ def list(request):
 @login_required
 def detail(request,id):
     env = Environ.objects.get(pk=id)
-    return render(request, 'env/detail.html', {'env':env})
+    tasks = []
+    mytasks = []
+    tmptasks = Task.objects.filter(project=env.project)
+    tmpmytasks = Task2User.objects.filter(project=env.project, user=request.user)
+    for it in tmpmytasks:
+        mytasks.append(it.task)
+    for t in tmptasks:
+        if t not in mytasks:
+            tasks.append(t)
+    print(tasks)
+    print(tmptasks)
+    commits = Commit.objects.filter(user=request.user)
+    return render(request, 'env/detail.html', {'env':env, 'tasks': tasks, 'commits': commits, 'mytasks': mytasks})
 
 
 @login_required

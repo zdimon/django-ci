@@ -15,7 +15,7 @@ class Environ(models.Model):
     name = models.CharField(verbose_name='Название рабочей области', help_text=_('должно быть уникальным, поэтому мы добавили ваш логин и id проекта'), max_length=60, unique=True)
     status = models.CharField(verbose_name='Статус', max_length=60, default='создается')
     user = models.ForeignKey(
-        User, null=True, blank=True, on_delete=models.CASCADE)
+        "account.Customer", null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.project.name

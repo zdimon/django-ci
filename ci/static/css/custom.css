@@ -15,3 +15,11 @@
 .middle-text {
     font-size: 20px;
 }
+
+.bg-red {
+    background-color: rgb(230, 187, 187);
+}
+
+.bg-green {
+    background-color: rgb(215, 241, 165);
+}

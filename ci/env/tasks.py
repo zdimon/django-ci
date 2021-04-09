@@ -3,6 +3,7 @@ import os
 import git
 from celery.decorators import task
 from django.contrib.auth.models import User
+from account.models import Customer
 import subprocess
 from main.utils import run_command
 from .utils import create_dir, git_create_branch, git_clone, nginx_conf, django_conf, frontend_conf
@@ -42,7 +43,7 @@ def create_env(project_id, user_id):
     from project.models import Project, ProjectProcess
     from .models import Environ, EnvironProcess
     project = Project.objects.get(pk=project_id)
-    user = User.objects.get(pk=user_id)
+    user = Customer.objects.get(pk=user_id)
     ename = f'{user.username}-{project.id}' 
     try:
         env = Environ.objects.get(name=ename)

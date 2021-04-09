@@ -4,7 +4,9 @@ from main.utils import run_command
 from django.conf import settings
 import os
 from main.utils import run_command
+from celery.decorators import task
 
+@task()
 def clear_origin(poj_id):
     from project.models import Project
     prj = Project.objects.get(pk=poj_id)
@@ -12,7 +14,11 @@ def clear_origin(poj_id):
     bashCommand = "sudo rm -r %s" % env_path
     run_command(bashCommand)
 
+
+@task()
 def clone_origin(poj_id):
+    import time
+    time.sleep(1)
     from project.models import Project
     prj = Project.objects.get(pk=poj_id)
     print('Cloning origin from %s' % prj.git)
