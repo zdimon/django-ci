@@ -61,7 +61,7 @@ def django_conf(env_id):
     tpl = tpl.replace('%prj_dir%', prj_dir)
     tpl = tpl.replace('%ci_dir%', str(settings.BASE_DIR))
     tpl = tpl.replace('%user%', settings.USER)
-    tpl = tpl.replace('%env_dir%', os.path.join(settings.WORK_DIR, env.project.venv_path, 'venv'))
+    tpl = tpl.replace('%env_dir%', os.path.join(settings.WORK_DIR, env.name, env.project.venv_path, 'venv'))
     filename = '%s-django.conf' % env.name
     conf_path = os.path.join(
         settings.BASE_DIR, 'env-conf', 'supervisor', filename)
