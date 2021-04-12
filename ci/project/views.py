@@ -9,7 +9,7 @@ from django.shortcuts import redirect
 
 @login_required
 def pre_remove(request,id):
-    projects = Project.objects.get(pk=id)
+    project = Project.objects.get(pk=id)
     env = Environ.objects.filter(user=request.user, project=project)
     return redirect(f'/env/pre_remove/{env.id}')
 
