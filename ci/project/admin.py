@@ -8,4 +8,4 @@ class ProjectAdmin(admin.ModelAdmin):
 
 @admin.register(ProjectProcess)
 class ProjectProcessAdmin(admin.ModelAdmin):
-    list_display = ['name', 'command', 'project']
+    list_display = ['name', 'command', 'project', 'path']
