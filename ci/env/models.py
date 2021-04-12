@@ -47,7 +47,7 @@ class Environ(models.Model):
             # restart()
 
 class EnvironProcess(models.Model):
-    name = models.CharField(verbose_name='Название', max_length=250, unique=True)
+    name = models.CharField(verbose_name='Название', max_length=250)
     status =  models.CharField(verbose_name='Статус', max_length=50, default='создается')
     env = models.ForeignKey(Environ, on_delete=models.CASCADE)
     path =  models.CharField(verbose_name='Каталог', max_length=250)
