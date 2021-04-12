@@ -51,7 +51,7 @@ def frontend_conf(env_id):
 def django_conf(env_id):
     from .models import Environ, EnvironProcess
     env = Environ.objects.get(pk=env_id)
-    envp = EnvironProcess.objects.get(env=env,name='django')
+    envp = EnvironProcess.objects.get(env=env, name='django')
     path = os.path.join(settings.BASE_DIR, 'tpl', 'django.conf')
     with open(path, 'r') as f:
         tpl = f.read()
