@@ -13,6 +13,7 @@ class Project(models.Model):
     image = ImageCropField(upload_to='files')
     cropping = ImageRatioField('image', '150x150')
     git = models.CharField(verbose_name='git репозиторий', max_length=250, unique=True)
+    media_path =  models.CharField(verbose_name='Путь к медиа', max_length=250, default='')
     
     def __str__(self):
         return self.title
@@ -43,7 +44,7 @@ class ProjectProcess(models.Model):
     command =  models.CharField(verbose_name='Команда', max_length=250)
     path =  models.CharField(verbose_name='Каталог', max_length=250)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    media_path =  models.CharField(verbose_name='Путь к медиа', max_length=250, default='')
+    
 
     def __str__(self):
         return self.name
