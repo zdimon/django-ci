@@ -1,4 +1,4 @@
-ci/db.sqlite3
+db.sqlite3
 logs
 .env
 venv
