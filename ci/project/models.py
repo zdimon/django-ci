@@ -44,7 +44,7 @@ class ProjectProcess(models.Model):
     name = models.CharField(choices=PROC_CHOICES,verbose_name='Название', max_length=60, default='django')
     command =  models.CharField(verbose_name='Команда', max_length=250)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    
+    path =  models.CharField(verbose_name='Каталог', max_length=250, null=True, blank=True)    
 
     def __str__(self):
         return self.name

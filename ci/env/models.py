@@ -36,6 +36,7 @@ class Environ(models.Model):
                 ep.env = instance
                 ep.envproc = p
                 ep.name = p.name
+                ep.path = p.path
                 ep.command = p.command
                 ep.save()
             generate_env.delay(instance.id)
