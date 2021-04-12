@@ -53,7 +53,7 @@ class ProjectProcess(models.Model):
 from .tasks import clone_origin, clear_origin
 
 
-def post_create(cls, sender, instance, created, *args, **kwargs):
+def post_create_handler(cls, sender, instance, created, *args, **kwargs):
     if created:
         clone_origin.delay(instance.pk)
 
