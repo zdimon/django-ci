@@ -14,6 +14,7 @@ class Project(models.Model):
     cropping = ImageRatioField('image', '150x150')
     git = models.CharField(verbose_name='git репозиторий', max_length=250, unique=True)
     media_path =  models.CharField(verbose_name='Путь к медиа', max_length=250, default='')
+    venv_path =  models.CharField(verbose_name='Путь к ВО', max_length=250, default='')
     
     def __str__(self):
         return self.title
@@ -42,7 +43,6 @@ class ProjectProcess(models.Model):
     )
     name = models.CharField(choices=PROC_CHOICES,verbose_name='Название', max_length=60, default='django')
     command =  models.CharField(verbose_name='Команда', max_length=250)
-    path =  models.CharField(verbose_name='Каталог', max_length=250)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     
 

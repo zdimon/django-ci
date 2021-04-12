@@ -64,6 +64,7 @@ class EnvironProcess(models.Model):
             maxp = EnvironProcess.objects.aggregate(Max('port'))
             print(maxp)
             instance.port = maxp["port__max"]+1
+            instance.path = instance.env.project.venv_path
             instance.save()
 
 def pre_delete_handler(sender, instance, using, **kwargs):
