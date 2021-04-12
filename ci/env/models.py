@@ -35,7 +35,6 @@ class Environ(models.Model):
                 ep = EnvironProcess()
                 ep.env = instance
                 ep.envproc = p
-                ep.path = p.path
                 ep.name = p.name
                 ep.command = p.command
                 ep.save()
