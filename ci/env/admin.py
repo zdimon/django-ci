@@ -13,4 +13,4 @@ class EnvironAdmin(admin.ModelAdmin):
 
 @admin.register(EnvironProcess)
 class EnvironProcessAdmin(admin.ModelAdmin):
-    list_display = ['name', 'port', 'env', 'path']
+    list_display = ['name', 'port', 'env', 'path', 'command']
