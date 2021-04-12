@@ -34,6 +34,7 @@ def frontend_conf(env_id):
         sname = '%s.frontend.%s' % (env.name, settings.DOMAIN)
         tpl = tpl.replace('%name%', sname)
         # tpl = tpl.replace('%port%', str(envp.port))
+        tpl = tpl.replace('%user%', settings.USER)
         prj_dir = os.path.join(settings.WORK_DIR, env.name, envp.path)
         tpl = tpl.replace('%prj_dir%', prj_dir)
         tpl = tpl.replace('%ci_dir%', str(settings.BASE_DIR))
