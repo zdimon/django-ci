@@ -12,7 +12,7 @@ def nginx_conf(env_id):
     with open(path, 'r') as f:
         tpl = f.read()
 
-    tpl = tpl.replace('%media_path%', '/media')
+    tpl = tpl.replace('%media_path%', env.project.media)
     sname = '%s.%s' % (env.name, settings.DOMAIN)
     tpl = tpl.replace('%server_name%', sname)
     dj = EnvironProcess.objects.get(env=env,name='django')

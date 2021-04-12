@@ -14,10 +14,11 @@ from main.models import Task2User, Commit, Task
 @login_required
 def list(request):
     envs = Environ.objects.filter(user=request.user)
-    return render(request, 'env/list.html', {'envs':envs})
+    return render(request, 'env/list.html', {'envs': envs})
+
 
 @login_required
-def detail(request,id):
+def detail(request, id):
     env = Environ.objects.get(pk=id)
     tasks = []
     mytasks = []
@@ -31,17 +32,17 @@ def detail(request,id):
     print(tasks)
     print(tmptasks)
     commits = Commit.objects.filter(user=request.user)
-    return render(request, 'env/detail.html', {'env':env, 'tasks': tasks, 'commits': commits, 'mytasks': mytasks, 'ssh_login':settings.SSH_LOGIN, 'ssh_password': settings.SSH_PASSWORD, 'domain': settings.DOMAIN, "ssh_port": settings.SSH_PORT})
+    return render(request, 'env/detail.html', {'env': env, 'tasks': tasks, 'commits': commits, 'mytasks': mytasks, 'ssh_login':settings.SSH_LOGIN, 'ssh_password': settings.SSH_PASSWORD, 'domain': settings.DOMAIN, "ssh_port": settings.SSH_PORT})
 
 
 @login_required
-def pre_create(request,id):
+def pre_create(request, id):
     project = Project.objects.get(pk=id)
     return render(request, 'env/pre_create.html', {'project':project})
 
 
 @login_required
-def create(request,id):
+def create(request, id):
     if not create_env(id,request.user.id):
         messages.success(
             request, 'Ошибка. Эта область уже создана!')
@@ -52,7 +53,7 @@ def create(request,id):
 
 
 @login_required
-def pre_remove(request,id):
+def pre_remove(request, id):
     env = Environ.objects.get(pk=id)
     path = os.path.join(settings.WORK_DIR, env.name)
     diff = []
