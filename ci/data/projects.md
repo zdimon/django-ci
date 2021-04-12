@@ -9,6 +9,8 @@ ij
 Технологии: Django+Angular.
 
 git@github.com:zdimon/ij.git
+ng build mobi --watch
+
 
 
 Сайт продажи печати pressa.ru
@@ -20,3 +22,4 @@ git@github.com:zdimon/ij.git
 git@github.com:zdimon/pressa-besa.git
 
 
+bash bin/c/frontend
