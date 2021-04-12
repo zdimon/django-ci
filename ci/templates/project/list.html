@@ -25,8 +25,13 @@
                         {{ p.desc|safe }}
                     </td>
                     <td scope="col">
+                    {% if p.id in eid %}
+                        <a 
+                    class="git-pull btn btn-alert" href="/env/pre_create/{{ p.id }}">Удалить рабочую область</a>
+                    {% else %}
                         <a 
                     class="git-pull btn btn-primary" href="/env/pre_create/{{ p.id }}">Создать рабочую область</a>
+                    {% endif %}
 
                     </td>
                 </tr>
