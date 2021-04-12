@@ -21,5 +21,6 @@ ng build mobi --watch
 
 git@github.com:zdimon/pressa-besa.git
 
+/home/student/origin/media/pressa-besa
 
 bash bin/c/frontend

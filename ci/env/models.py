@@ -49,7 +49,8 @@ class EnvironProcess(models.Model):
     name = models.CharField(verbose_name='Название', max_length=250)
     status =  models.CharField(verbose_name='Статус', max_length=50, default='создается')
     env = models.ForeignKey(Environ, on_delete=models.CASCADE)
-    command =  models.CharField(verbose_name='Каталог', max_length=250, default='')
+    path =  models.CharField(verbose_name='Каталог', max_length=250, null=True, blank=True)
+    command =  models.CharField(verbose_name='Комманда', max_length=250, default='')
     port = models.IntegerField(default=8080)
     envproc = models.ForeignKey('project.ProjectProcess', on_delete=models.CASCADE)
 
