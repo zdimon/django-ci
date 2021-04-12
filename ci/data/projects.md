@@ -24,3 +24,14 @@ git@github.com:zdimon/pressa-besa.git
 /home/student/origin/media/pressa-besa
 
 bash bin/c/frontend
+
+
+
+Сайт знакомств
+
+
+Сайт для брачных агенств.
+
+Технологии: Django+Angular.
+
+git@github.com:zdimon/just-dating.git

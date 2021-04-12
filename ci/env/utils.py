@@ -27,23 +27,24 @@ def frontend_conf(env_id):
     from .models import Environ, EnvironProcess
     env = Environ.objects.get(pk=env_id)
     try:
-        envp = EnvironProcess.objects.get(env=env,name='frontend')
-        path = os.path.join(settings.BASE_DIR, 'tpl', 'frontend.conf')
-        with open(path, 'r') as f:
-            tpl = f.read()
-        sname = '%s.frontend.%s' % (env.name, settings.DOMAIN)
-        tpl = tpl.replace('%name%', sname)
-        # tpl = tpl.replace('%port%', str(envp.port))
-        tpl = tpl.replace('%user%', settings.USER)
-        prj_dir = os.path.join(settings.WORK_DIR, env.name, envp.path)
-        tpl = tpl.replace('%prj_dir%', prj_dir)
-        tpl = tpl.replace('%ci_dir%', str(settings.BASE_DIR))
-        tpl = tpl.replace('%command%', envp.command)
-        filename = '%s-frontend.conf' % env.name
-        conf_path = os.path.join(
-             settings.BASE_DIR, 'env-conf', 'supervisor', filename)
-        with open(conf_path, 'w+') as f:
-            f.write(tpl)
+        for envp in EnvironProcess.objects.filter(env=env,name='frontend'):
+            # envp = EnvironProcess.objects.get(env=env,name='frontend')
+            path = os.path.join(settings.BASE_DIR, 'tpl', 'frontend.conf')
+            with open(path, 'r') as f:
+                tpl = f.read()
+            sname = '%s.frontend.%s' % (env.name, settings.DOMAIN)
+            tpl = tpl.replace('%name%', sname)
+            # tpl = tpl.replace('%port%', str(envp.port))
+            tpl = tpl.replace('%user%', settings.USER)
+            prj_dir = os.path.join(settings.WORK_DIR, env.name, envp.path)
+            tpl = tpl.replace('%prj_dir%', prj_dir)
+            tpl = tpl.replace('%ci_dir%', str(settings.BASE_DIR))
+            tpl = tpl.replace('%command%', envp.command)
+            filename = '%s-frontend.conf' % env.name
+            conf_path = os.path.join(
+                settings.BASE_DIR, 'env-conf', 'supervisor', filename)
+            with open(conf_path, 'w+') as f:
+                f.write(tpl)
     except Exception as e:
         print(e)
 
