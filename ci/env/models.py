@@ -62,7 +62,7 @@ class EnvironProcess(models.Model):
     def post_create(cls, sender, instance, created, *args, **kwargs):
         if created:
             maxp = EnvironProcess.objects.aggregate(Max('port'))
-            # print(maxp)
+            print(maxp)
             instance.port = maxp["port__max"]+1
             instance.save()
 
