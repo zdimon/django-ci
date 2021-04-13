@@ -5,7 +5,7 @@ from django.conf import settings
 import os
 from main.utils import run_command
 from celery.decorators import task
-from .utils import release_django_conf, release_nginx_conf
+from .utils import release_django_conf, release_nginx_conf, frontend_conf
 from main.tasks import restart
 
 @task()
@@ -20,6 +20,7 @@ def clear_origin(poj_id):
 def make_release_server(poj_id):
     release_django_conf(poj_id)
     release_nginx_conf(poj_id)
+    frontend_conf(poj_id)
     restart()
 
 @task()

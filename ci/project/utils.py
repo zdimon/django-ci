@@ -47,3 +47,28 @@ def release_nginx_conf(project_id):
         settings.BASE_DIR, 'env-conf','nginx', sname)
     with open(conf_path, 'w+') as f:
         f.write(tpl) 
+
+
+def frontend_conf(project_id):
+    from project.models import Project, ProjectProcess
+    project = Project.objects.get(pk=project_id)
+    try:
+        for pp in ProjectProcess.objects.filter(project=project, name='frontend'):
+            path = os.path.join(settings.BASE_DIR, 'tpl', 'frontend.conf')
+            with open(path, 'r') as f:
+                tpl = f.read()
+            sname = 'release-%s.frontend.%s' % (project.name, settings.DOMAIN)
+            tpl = tpl.replace('%name%', sname)
+            tpl = tpl.replace('%user%', settings.USER)
+            prj_dir = os.path.join(settings.WORK_DIR, project.name, pp.path)
+            tpl = tpl.replace('%prj_dir%', prj_dir)
+            tpl = tpl.replace('%ci_dir%', str(settings.BASE_DIR))
+            tpl = tpl.replace('%command%', pp.command)
+            filename = '%s-frontend.conf' % project.name
+            conf_path = os.path.join(
+                settings.BASE_DIR, 'env-conf', 'supervisor', filename)
+            with open(conf_path, 'w+') as f:
+                f.write(tpl)
+    except Exception as e:
+        print('Error in creating frontend supervisor conf!!!!! %s - %s' % (pp.path, pp.id))
+        print(e)
