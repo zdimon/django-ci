@@ -3,6 +3,14 @@
     <li class="list-group-item">
     <a class="btn btn-primary" target=_blank href="{{ env.link_url }}">Ссылка для тестирования </a>
     </li>
+    {% if env.project.release_url %}
+    <li class="list-group-item">
+        <a 
+        class="git-push btn-sm btn-success"
+        target=_blank href="{{ p.release_url }}">Ссылка на релиз</a>
+    </li>
+
+   
     <li class="list-group-item">
         <a class="btn btn-primary" target=_blank href="/maket/{{ env.project.id }}">Макеты страниц</a>
         </li>
