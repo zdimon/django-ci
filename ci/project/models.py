@@ -5,6 +5,8 @@ from image_cropping.fields import ImageRatioField, ImageCropField
 from django.utils.translation import ugettext_lazy as _
 from django.db.models.signals import post_save
 from django.db.models.signals import pre_delete
+from django.db.models import Max
+
 
 class Project(models.Model):
     title = models.CharField(verbose_name='Название', max_length=160, unique=True)
@@ -47,9 +49,18 @@ class ProjectProcess(models.Model):
     command =  models.CharField(verbose_name='Команда', max_length=250)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     path =  models.CharField(verbose_name='Каталог', max_length=250, null=True, blank=True)    
+    port = models.IntegerField(default=9080)
 
     def __str__(self):
         return self.name
+
+    @classmethod
+    def post_create(cls, sender, instance, created, *args, **kwargs):
+        if created:
+            maxp = ProjectProcess.objects.aggregate(Max('port'))
+            print(maxp)
+            instance.port = maxp["port__max"]+1
+            instance.save()
     
 
 from .tasks import clone_origin, clear_origin
@@ -63,6 +74,6 @@ def post_create_handler(sender, instance, created, *args, **kwargs):
 def pre_delete_handler(sender, instance, using, **kwargs):
     clear_origin(instance.pk)    
 
-
+post_save.connect(ProjectProcess.post_create, sender=ProjectProcess)
 post_save.connect(post_create_handler, sender=Project)
 pre_delete.connect(pre_delete_handler, sender=Project)

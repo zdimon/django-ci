@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from env.models import Environ, EnvironProcess
+from project.models import Project
 from .tasks import git_pull, git_status, git_push, git_diff, git_commit
 from django.http import HttpResponse
 from django.http import JsonResponse
@@ -7,8 +8,9 @@ from django.http import JsonResponse
 
 def control(request):
     envs = Environ.objects.all()
+    projects = Project.objects.all()
 
-    return render(request, 'control.html', {"envs": envs})
+    return render(request, 'control/list.html', {"envs": envs, "projects": projects})
 
 
 def do_pull(request, id):

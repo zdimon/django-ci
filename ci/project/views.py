@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from env.models import Environ
 from django.shortcuts import redirect
+from .utils import release_django_conf
 
 
 @login_required
@@ -14,7 +15,13 @@ def pre_remove(request,id):
     return redirect(f'/env/pre_remove/{env.id}')
 
 
-
+@login_required
+def make_release(request,id):
+    project = Project.objects.get(pk=id)
+    messages.success(
+        request, 'Релизный сервер создается.')
+    release_django_conf(id)
+    return redirect(f'/control')
 
 @login_required
 def list(request):
