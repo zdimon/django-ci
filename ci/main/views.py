@@ -147,6 +147,7 @@ def merge_master(request, id):
         request, 'Отлично! Теперь Ваш репозиторий синхронизирован с актуальной версией проекта (веткой master).')
     return redirect('/env')
 
-def maket(request):
-    items = Maket.objects.all()
+def maket(request,id):
+    project = Project.objects.get(pk=id)
+    items = Maket.objects.filter(project=project)
     return render(request, 'maket.html', {"items": items})

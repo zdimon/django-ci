@@ -29,7 +29,7 @@ urlpatterns = [
     path('tasks', tasks),
     path('instr', instr),
     path('hook', hook),
-    path('maket', maket),
+    path('maket/<int:id>', maket),
     path('task/take/<int:id>', take_task),
     path('task/del/<int:id>', del_task),
     path('task/done/<int:id>', done_task),
