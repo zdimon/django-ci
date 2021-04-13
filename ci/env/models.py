@@ -29,6 +29,10 @@ class Environ(models.Model):
     def link_url(self):
         return "http://%s.%s" % (self.name, settings.DOMAIN)
 
+    @property
+    def get_work_dir(self):
+        return "work/%s" % (self.name,)
+
     @ property
     def link(self):
         return mark_safe('<a target=_blank href="http://%s.%s">Ссылка на рабочую область</a>' % (self.name, settings.DOMAIN))
