@@ -96,12 +96,15 @@
                                                 class="git-push btn-sm btn-success"
                                                 target=_blank href="{{ p.release_url }}">Ссылка на релиз</a>
                                                 {% else %}
+                                                <!-- 
                                                     <a 
                                                     class="git-push btn-sm btn-success" href="./project/make_release/{{ p.id }}">Создать релизный сервер</a>
+                                                -->
                                                 {% endif %}
 
-                                               
-
+                                                <a 
+                                                class="git-push btn-sm btn-success" href="./project/make_release/{{ p.id }}">Создать релизный сервер</a>
+                                                
                                                
                                             
                                         </td>
