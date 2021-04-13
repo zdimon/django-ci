@@ -136,7 +136,10 @@ def create_dir(env_id):
         pass
 
 
-def save_commit(comment,user):
+def save_commit(comment, user, task=None):
     c = Commit()
-    
+    if task:
+        c.task = task
+    c.user = user
+    c.title = comment
     c.save()

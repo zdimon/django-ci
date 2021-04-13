@@ -6,6 +6,7 @@ import subprocess
 from main.utils import run_command, normalize_email
 from env.models import Environ
 from git import Repo
+from env.utils import save_commit
 
 
 def git_pull(env_id):
@@ -24,9 +25,11 @@ def git_commit(env_id):
     if repo.git.diff(t):
         print('Make commit')
         repo.git.add(update=True)
-        r = repo.index.commit('commit from '+env.user.username)
+        comment = 'commit from %s project %s' % (env.user.username, env.project.name)
+        r = repo.index.commit(comment)
         env.state = 'edited'
         env.save()
+        save_commit(comment, env.user)
         return {"error": None, "output": 'Данные закомичены.'}
     else:
         return {"error": None, "output": 'Нечего комитить.'}

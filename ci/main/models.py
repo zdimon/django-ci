@@ -149,6 +149,8 @@ class Commit(models.Model):
         "Пользователь"), on_delete=models.CASCADE)
     task = models.ForeignKey(Task, verbose_name=_(
         "Задача"), on_delete=models.CASCADE, null=True, blank=True)
+    project = models.ForeignKey(Project, verbose_name=_(
+        "Задача"), on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     title = models.CharField(verbose_name='Заголовок', max_length=250)
 
