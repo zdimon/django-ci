@@ -8,7 +8,7 @@ class EnvironProcessInline(admin.TabularInline):
 
 @admin.register(Environ)
 class EnvironAdmin(admin.ModelAdmin):
-    list_display = ['name', 'link']
+    list_display = ['name', 'link', 'state']
     inlines = [EnvironProcessInline, ]
 
 @admin.register(EnvironProcess)

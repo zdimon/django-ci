@@ -11,9 +11,14 @@ from project.models import ProjectProcess
 
 
 class Environ(models.Model):
+    STATE = (
+        ("clean", "без изменений"),
+        ("edited", "есть правки"),
+    )
     project = models.ForeignKey('project.Project',on_delete=models.CASCADE)
     name = models.CharField(verbose_name='Название рабочей области', help_text=_('должно быть уникальным, поэтому мы добавили ваш логин и id проекта'), max_length=60, unique=True)
     status = models.CharField(verbose_name='Статус', max_length=60, default='создается')
+    state = models.CharField(verbose_name='Состояние', max_length=60, default='clean')
     user = models.ForeignKey(
         "account.Customer", null=True, blank=True, on_delete=models.CASCADE)
 
