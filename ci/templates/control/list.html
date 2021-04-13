@@ -38,6 +38,7 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Ссылка</th>
                                     <th scope="col">Пользователь</th>
+                                    <th scope="col">Проект</th>
                                     <th scope="col">Статус</th>
                                     <th scope="col">Действия</th>
                                     </tr>
@@ -47,6 +48,7 @@
                                         <td scope="row">{{ env.id }}</td>
                                         <td scope="row"><a target="_blank" href="{{ env.link_url }}">Ссылка</a></td>
                                         <td scope="row">{{ env.user }}</td>
+                                        <td scope="row">{{ env.project.title }}</td>
                                         <td scope="row">{{ env.get_state_display }}</td>
                                         <td scope="row">
                                             
