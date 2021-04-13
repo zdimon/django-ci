@@ -22,10 +22,28 @@
 
         {% if env %}
             <div class="row">
+                <div class="col-8">
+                    <h4 class=""> {{ env.project.title }} </h4>
+                </div>
+                <div class="col-4">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ env.project.title }}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {% for e in envs %}
+                            <a class="dropdown-item" href="/env/detail/{{env.id}}">{{ env.project.title }}</a>
+                        {% endfor %}
+                         
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="row">
                     
 
                     <div class="col-12">
-                        <h4 class=""> {{ env.project.title }} </h4>
+                        
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
                                 <a data-toggle="tab" href="#setting" class="nav-link active" >Настройки</a>

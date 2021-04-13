@@ -20,6 +20,7 @@ def list(request):
 @login_required
 def detail(request, id):
     env = Environ.objects.get(pk=id)
+    envs = Environ.objects.all()
     tasks = []
     mytasks = []
     tmptasks = Task.objects.filter(project=env.project)
@@ -32,7 +33,7 @@ def detail(request, id):
     print(tasks)
     print(tmptasks)
     commits = Commit.objects.filter(user=request.user)
-    return render(request, 'env/detail.html', {'env': env, 'tasks': tasks, 'commits': commits, 'mytasks': mytasks, 'ssh_login':settings.SSH_LOGIN, 'ssh_password': settings.SSH_PASSWORD, 'domain': settings.DOMAIN, "ssh_port": settings.SSH_PORT})
+    return render(request, 'env/detail.html', {'env': env, 'envs': envs, 'tasks': tasks, 'commits': commits, 'mytasks': mytasks, 'ssh_login':settings.SSH_LOGIN, 'ssh_password': settings.SSH_PASSWORD, 'domain': settings.DOMAIN, "ssh_port": settings.SSH_PORT})
 
 
 @login_required
