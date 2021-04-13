@@ -27,3 +27,7 @@ def clone_origin(poj_id):
     os.chdir(path)
     command = f'git clone {prj.git} .'
     run_command(command)
+    print('Cheking',os.path.join(path,'install'))
+    if os.path.isfile(os.path.join(path,'install')):
+        os.chdir(path)
+        run_command('bash install')

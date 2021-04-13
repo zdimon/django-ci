@@ -14,6 +14,7 @@ class Project(models.Model):
     cropping = ImageRatioField('image', '150x150')
     git = models.CharField(verbose_name='git репозиторий', max_length=250, unique=True)
     git_url = models.CharField(verbose_name='url git репозитория', max_length=250, default='')
+    release_url = models.CharField(verbose_name='url релизной версии', max_length=250, default='')
     media_path =  models.CharField(verbose_name='Путь к медиа', max_length=250, default='')
     venv_path =  models.CharField(verbose_name='Путь к ВО', max_length=250, default='', null=True, blank=True)
     
