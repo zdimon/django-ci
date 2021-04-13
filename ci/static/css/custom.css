@@ -23,3 +23,7 @@
 .bg-green {
     background-color: rgb(215, 241, 165);
 }
+
+.table td, .table th {
+    border-top: 0px !important;
+}

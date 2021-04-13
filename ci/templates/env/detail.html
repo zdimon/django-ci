@@ -3,9 +3,11 @@
  {% load crispy_forms_tags %}
  {% block content %}
      <div class="container">
+         <!-- 
         <div class="alert alert-warning" role="alert">
             ВАЖНО! Перед началом работы обновите репозиторий кнопкой git pull т.к. каждый день он будет устаревать.
         </div>
+        -->
         {% if error %}
             <div class="alert alert-warning" role="alert">
                 {{ error }}
@@ -20,205 +22,47 @@
 
         {% if env %}
             <div class="row">
-                    <div class="col-4">
-                    <h4 class=""> {{ env.project.title }} </h4>
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                        <a class="btn btn-primary" target=_blank href="{{ env.link_url }}">Ссылка для тестирования </a>
-                        </li>
-                        <li class="list-group-item">
-                        <a target=_blank href="/instr">Инструкция по работе в Vscode </a>
-                        </li>
-                        
-                        <li class="list-group-item">
-                            Доступы по ssh или sftp
-                        </li>
-                        <li class="list-group-item">
-                            Логин: {{ ssh_login }}
-                        </li>
-                        <li class="list-group-item">
-                            Пароль: {{ ssh_password }}
-                        </li>
-                        <li class="list-group-item">
-                            Домен: {{ domain }}
-                        </li>
-                        <li class="list-group-item">
-                            Порт: {{ ssh_port }}
-                        </li>
-                        
-                        
-                        <li class="list-group-item">
-                            <div class="btn-group" role="group" >
-                                <a 
-                                data-toggle="modal" data-target="#gitpullModal"
-                                data-id="{{ env.id }}" class="git-pull btn btn-primary" href="#">git pull</a>
-                                <a 
-                                data-toggle="modal" data-target="#gitpullModal"
-                                data-id="{{ env.id }}" class="git-status btn btn-info" href="#">git status</a>
+                    
 
-                                <a 
-                                data-toggle="modal" data-target="#gitpullModal"
-                                data-id="{{ env.id }}" class="git-commit btn btn-warning" href="#">git commit</a>
-
-                                
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <a class="btn btn-lg btn-outline-danger btn-block" href="/env/pre_remove/{{ env.id }}">Удалить область</a>                            
-                        </li>
-                        <li class="list-group-item">
-                            После удаления вы всегда можете создать ее заново <a href="/project/list">тут</a>.                           
-                        </li>
-                    </ul>
-                    </div>
-
-                    <div class="col-8">
-                        <h4>Задачи</h4>
-
-
+                    <div class="col-12">
+                        <h4 class=""> {{ env.project.title }} </h4>
                         <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a data-toggle="tab" href="#setting" class="nav-link active" >Настройки</a>
+                            </li>
                         <li class="nav-item">
-                            <a 
-                            aria-controls="task" aria-selected="true"
-                            id="task-tab" data-toggle="tab" href="#task" class="nav-link active" >Задачи на выполнение</a>
+                            <a data-toggle="tab" href="#task" class="nav-link" >Задачи на выполнение</a>
                         </li>
                         <li class="nav-item">
-                            <a 
-                            aria-controls="mytask" aria-selected="true"
-                            id="mytask-tab" data-toggle="tab" href="#mytask" class="nav-link" >Взятые задачи</a>
+                            <a data-toggle="tab" href="#mytask" class="nav-link" >Взятые задачи</a>
                         </li>
                         <li class="nav-item">
-                            <a 
-                            aria-controls="commit" aria-selected="false"
-                            id="commit-tab" data-toggle="tab" href="#commit" class="nav-link" href="#">Комиты</a>
+                            <a data-toggle="tab" href="#commit" class="nav-link" href="#">Комиты</a>
                         </li>
                         </ul>
 
 
                         <div class="tab-content">
 
+                            <!---  настройки  ------>
+                            <div class="tab-pane fade show active" id="setting" role="tabpanel" >
+                                {% include 'env/parts/info.html' %}
+                            </div>
+
                             <!---  на выполнение  ------>
-                            <div class="tab-pane fade show active" id="task" role="tabpanel" aria-labelledby="home-tab">
-                                <table class="table">
-                                <thead>
-                                    <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Описание</th>
-                                    <th scope="col">Изображения</th>
-                                    <th scope="col">Действия</th>
-                                    </tr>
-                                </thead>
-
-                                    {% for task in tasks %}
-                                        <tr>
-                                        <th scope="row">{{ task.id }}
-
-                                         
-                                        </th>
-                                        <td>
-                                                <p slyle="font-weight: strong"><strong>{{ task.title }}</strong></p>
-                                                {{ task.desc }}
-                                                <p>
-                                                    Статус: {{ task.get_status }}
-                                                </p>
-                                                <p>
-                                                    Сложность: {{ task.hard }}
-                                                </p>
-
-                                        </td>
-                                        <td>
-                                            {% for im in task.file_set.all %}
-                                                <p>
-                                                <p>{{ im.title }}</p>
-                                                <a target=_blank href="{{im.image.url}}">
-                                                    <img title="{{ im.title }}" src="{{im.small_image_url}}" />
-                                                </a>
-                                                </p>
-                                            {% endfor %}
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-md btn-outline-primary btn-block" href="/task/take/{{ task.id }}">Взять в работу</a>
-                                            
-                                        </td>
-                                        </tr>
-                                    {% endfor %}
-
-                                </table>
+                            <div class="tab-pane fade show" id="task" role="tabpanel">
+                               {% include 'env/parts/task.html' %}
                             </div>
 
 
                             <!---  в работе  ------>
-
-
                             <div class="tab-pane fade show" id="mytask" role="tabpanel" aria-labelledby="home-tab">
-                                <table class="table">
-                                <thead>
-                                    <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Описание</th>
-                                    <th scope="col">Изображения</th>
-                                    <th scope="col">Действия</th>
-                                    </tr>
-                                </thead>
-
-                                    {% for task in mytasks %}
-                                        <tr>
-                                        <th scope="row">{{ task.id }}</th>
-                                        <td>
-                                                <p slyle="font-weight: strong"><strong>{{ task.title }}</strong></p>
-                                                {{ task.desc }}
-                                                <p>
-                                                Статус: {{ task.get_status }}
-                                                </p>
-                                                <p>
-                                                    Сложность: {{ task.hard }}
-                                                </p>
-                                        </td>
-                                        <td>
-                                            {% for im in task.file_set.all %}
-                                                <p>
-                                                <p>{{ im.title }}</p>
-                                                <a target=_blank href="{{im.image.url}}">
-                                                    <img title="{{ im.title }}" src="{{im.small_image_url}}" />
-                                                </a>
-                                                </p>
-                                            {% endfor %}
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-lg btn-outline-primary btn-block" href="/task/done/{{ task.id }}">Выполнено</a>
-                                            <a class="btn btn-lg btn-outline-warning btn-block" href="/task/del/{{ task.id }}">Отказаться</a>
-                                            
-                                        </td>
-                                        </tr>
-                                    {% endfor %}
-
-                                </table>
+                                {% include 'env/parts/mytask.html' %}
                             </div>
 
 
                             <div class="tab-pane fade show" id="commit" role="tabpanel" aria-labelledby="home-tab">
-                                <table class="table">
-                                <thead>
-                                    <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Описание</th>
-                                    <th scope="col">Дата</th>
-                                    </tr>
-                                    {% for commit in commits %}
-                                        <tr>
-                                            <td>
-                                                {{ commit.id }}
-                                            </td>
-                                            <td>
-                                                {{ commit.title }}
-                                            </td>
-                                            <td>
-                                                {{ commit.created_at }}
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                </thead>
-                                </table>
+                                {% include 'env/parts/commits.html' %}
                             </div>
                     </div>
                 

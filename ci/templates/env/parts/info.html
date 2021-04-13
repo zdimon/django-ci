@@ -1,0 +1,53 @@
+
+<ul class="list-group">
+    <li class="list-group-item">
+    <a class="btn btn-primary" target=_blank href="{{ env.link_url }}">Ссылка для тестирования </a>
+    </li>
+    <li class="list-group-item">
+    <a target=_blank href="/instr">Инструкция по работе в Vscode </a>
+    </li>
+
+    <li class="list-group-item">
+        <a target=_blank href="{{ env.project.git }}">git репозиторий</a>
+        </li>
+    
+    <li class="list-group-item">
+        Доступы по ssh или sftp
+    </li>
+    <li class="list-group-item">
+        Логин: {{ ssh_login }}
+    </li>
+    <li class="list-group-item">
+        Пароль: {{ ssh_password }}
+    </li>
+    <li class="list-group-item">
+        Домен: {{ domain }}
+    </li>
+    <li class="list-group-item">
+        Порт: {{ ssh_port }}
+    </li>
+    
+    
+    <li class="list-group-item">
+        <div class="btn-group" role="group" >
+            <a 
+            data-toggle="modal" data-target="#gitpullModal"
+            data-id="{{ env.id }}" class="git-pull btn btn-primary" href="#">git pull</a>
+            <a 
+            data-toggle="modal" data-target="#gitpullModal"
+            data-id="{{ env.id }}" class="git-status btn btn-info" href="#">git status</a>
+
+            <a 
+            data-toggle="modal" data-target="#gitpullModal"
+            data-id="{{ env.id }}" class="git-commit btn btn-warning" href="#">git commit</a>
+
+            
+        </div>
+    </li>
+    <li class="list-group-item">
+        <a class="btn btn-lg btn-outline-danger btn-block" href="/env/pre_remove/{{ env.id }}">Удалить область</a>                            
+    </li>
+    <li class="list-group-item">
+        После удаления вы всегда можете создать ее заново <a href="/project/list">тут</a>.                           
+    </li>
+</ul>
