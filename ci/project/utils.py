@@ -13,19 +13,37 @@ def release_django_conf(project_id):
     tpl = tpl.replace('%name%', sname)
     tpl = tpl.replace('%port%', str(pp.port))
     if project.venv_path:
-        prj_dir = os.path.join(settings.WORK_DIR, project.name, project.venv_path)
+        prj_dir = os.path.join(settings.ORIGIN_DIR, project.name, project.venv_path)
     else:
-        prj_dir = os.path.join(settings.WORK_DIR, project.name)
+        prj_dir = os.path.join(settings.ORIGIN_DIR, project.name)
     
     tpl = tpl.replace('%prj_dir%', prj_dir)
     tpl = tpl.replace('%ci_dir%', str(settings.BASE_DIR))
     tpl = tpl.replace('%user%', settings.USER)
     if project.venv_path:
-        tpl = tpl.replace('%env_dir%', os.path.join(settings.WORK_DIR, project.name, project.venv_path, 'venv'))
+        tpl = tpl.replace('%env_dir%', os.path.join(settings.ORIGIN_DIR, project.name, project.venv_path, 'venv'))
     else:
-        tpl = tpl.replace('%env_dir%', os.path.join(settings.WORK_DIR, project.name, 'venv'))        
+        tpl = tpl.replace('%env_dir%', os.path.join(settings.ORIGIN_DIR, project.name, 'venv'))        
     filename = 'release-%s-django.conf' % project.name
     conf_path = os.path.join(
         settings.BASE_DIR, 'env-conf', 'supervisor', filename)
     with open(conf_path, 'w+') as f:
         f.write(tpl)
+
+
+def release_nginx_conf(project_id):
+    from project.models import Project, ProjectProcess
+    project = Project.objects.get(pk=project_id)
+    path = os.path.join(settings.BASE_DIR, 'tpl', 'nginx_vhost.conf')
+    with open(path, 'r') as f:
+        tpl = f.read()
+
+    tpl = tpl.replace('%media_path%', project.media_path)
+    sname = 'release-%s.%s' % (project.name, settings.DOMAIN)
+    tpl = tpl.replace('%server_name%', sname)
+    dj = ProjectProcess.objects.get(project=project, name='django')
+    tpl = tpl.replace('%port%', str(dj.port))
+    conf_path = os.path.join(
+        settings.BASE_DIR, 'env-conf','nginx', sname)
+    with open(conf_path, 'w+') as f:
+        f.write(tpl) 

@@ -91,9 +91,17 @@
                                         <td scope="row">{{ p.title }}</td>
                                        
                                         <td scope="row">
-                                            
+                                                {% if p.release_url %}
                                                 <a 
-                                                class="git-push btn-sm btn-success" href="./project/make_release/{{ p.id }}">Создать релизный сервер</a>
+                                                class="git-push btn-sm btn-success"
+                                                target=_blank href="{{ p.release_url }}">Ссылка на релиз</a>
+                                                {% else %}
+                                                    <a 
+                                                    class="git-push btn-sm btn-success" href="./project/make_release/{{ p.id }}">Создать релизный сервер</a>
+                                                {% endif %}
+
+                                               
+
                                                
                                             
                                         </td>

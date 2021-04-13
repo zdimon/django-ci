@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from env.models import Environ
 from django.shortcuts import redirect
-from .utils import release_django_conf
+from .tasks import make_release_server
+from django.conf import settings
 
 
 @login_required
@@ -20,7 +21,10 @@ def make_release(request,id):
     project = Project.objects.get(pk=id)
     messages.success(
         request, 'Релизный сервер создается.')
-    release_django_conf(id)
+    make_release_server.delay(id)
+    url = 'http://release-%s.%s' % (project.name, settings.DOMAIN)
+    project.release_url = url
+    project.save()
     return redirect(f'/control')
 
 @login_required

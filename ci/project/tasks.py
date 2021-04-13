@@ -5,6 +5,8 @@ from django.conf import settings
 import os
 from main.utils import run_command
 from celery.decorators import task
+from .utils import release_django_conf, release_nginx_conf
+from main.tasks import restart
 
 @task()
 def clear_origin(poj_id):
@@ -14,6 +16,11 @@ def clear_origin(poj_id):
     bashCommand = "sudo rm -r %s" % env_path
     run_command(bashCommand)
 
+@task()
+def make_release_server(poj_id):
+    release_django_conf(poj_id)
+    release_nginx_conf(poj_id)
+    restart()
 
 @task()
 def clone_origin(poj_id):
