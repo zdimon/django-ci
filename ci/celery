@@ -1,2 +1,2 @@
 . ./venv/bin/activate
-celery -A ci worker -l info
+celery -A ci worker -l info -setting=settings

@@ -4,7 +4,7 @@ from project.models import Project, ProjectProcess
 from .models import Environ, EnvironProcess
 from django.shortcuts import redirect
 from django.contrib import messages
-from .tasks import generate_env, create_env, build_front
+from .tasks import generate_env, create_env, build_front, merge_release
 from git import Repo
 import os
 from django.conf import settings
@@ -91,3 +91,12 @@ def remove(request,id):
     messages.success(
         request, 'Рабочая область удалена!')
     return redirect('/env/list')
+
+def do_merge(request, id):
+    env = Environ.objects.get(pk=id)
+    env.state = 'clean'
+    env.save()
+    merge_release.delay(id)
+    messages.success(
+        request, 'Данные смержены!')
+    return redirect('/control')

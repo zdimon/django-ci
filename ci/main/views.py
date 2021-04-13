@@ -145,7 +145,7 @@ def merge_master(request, id):
     git_merge_with_master.delay(id)
     messages.success(
         request, 'Отлично! Теперь Ваш репозиторий синхронизирован с актуальной версией проекта (веткой master).')
-    return redirect('/env')
+    return redirect('/control')
 
 def maket(request,id):
     project = Project.objects.get(pk=id)

@@ -49,7 +49,13 @@
                                         <td scope="row"><a target="_blank" href="{{ env.link_url }}">Ссылка</a></td>
                                         <td scope="row">{{ env.user }}</td>
                                         <td scope="row">{{ env.project.title }}</td>
-                                        <td scope="row">{{ env.get_state_display }}</td>
+                                        <td scope="row">
+                                        {{ env.get_state_display}}
+                                        {% if env.state == 'edited' %}
+                                                <a 
+                                                class="btn-sm btn-warning" href="/env/merge/{{env.id}}">    Смержить</a>
+                                        {% endif %}
+                                        </td>
                                         <td scope="row">
                                             
                                                 <a 

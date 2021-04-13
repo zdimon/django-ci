@@ -4,6 +4,7 @@ from main.utils import run_command
 from django.conf import settings
 import os
 import git
+from main.models import Commit
 
 def nginx_conf(env_id):
     from .models import Environ, EnvironProcess
@@ -135,4 +136,7 @@ def create_dir(env_id):
         pass
 
 
-   
+def save_commit(comment,user):
+    c = Commit()
+    
+    c.save()

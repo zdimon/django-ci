@@ -34,7 +34,7 @@ urlpatterns = [
     path('task/del/<int:id>', del_task),
     path('task/done/<int:id>', done_task),
     path('task/end/<int:id>', end_task),
-    path('env/merge/<int:id>', merge_master),
+    #path('env/merge/<int:id>', merge_master),
     path('', include('account.urls')),
     path('', include('control.urls')),
     path('project/', include('project.urls')),

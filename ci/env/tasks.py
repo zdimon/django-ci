@@ -104,4 +104,18 @@ def clear_work_dir(ename):
     restart()
     
 
-
+@task()
+def merge_release(env_id):
+    from .models import Environ
+    env = Environ.objects.get(pk=env_id)
+    path = os.path.join(settings.WORK_DIR, env.name)
+    os.chdir(path)
+    bname = 'devel-%s' % env.name
+    command = 'git push --set-upstream origin %s' % bname
+    run_command(command)
+    path = os.path.join(settings.ORIGIN_DIR, env.project.name)
+    os.chdir(path)
+    command = 'git pull'
+    run_command(command)
+    command = 'git merge origin/devel-%s' % env.name
+    run_command(command)

@@ -24,7 +24,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 SECRET_KEY = 'fb1gumhacn*%(m_g3ui!kai&ak^9=csr=pj=dmoxrqadi%txu4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
 
 ALLOWED_HOSTS = ['*']
 
@@ -140,7 +140,7 @@ STATICFILES_DIRS = [
 ]
 load_dotenv()
 
-DEBUG = os.getenv('DEBUG', True)
+DEBUG = os.getenv('DEBUG', False)
 USER = os.getenv('USER', 'zdimon')
 WORK_DIR = os.getenv('WORK_DIR')
 ORIGIN_DIR = os.getenv('ORIGIN_DIR')
