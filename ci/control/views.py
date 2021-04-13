@@ -1,12 +1,12 @@
 from django.shortcuts import render
-from main.models import *
+from env.models import Environ, EnvironProcess
 from .tasks import git_pull, git_status, git_push, git_diff, git_commit
 from django.http import HttpResponse
 from django.http import JsonResponse
 
 
 def control(request):
-    envs = Env.objects.all()
+    envs = Environ.objects.all()
 
     return render(request, 'control.html', {"envs": envs})
 
