@@ -94,6 +94,7 @@ class Maket(models.Model):
     title = models.CharField(verbose_name='Заголовок', max_length=250)
     image = ImageCropField(upload_to='files')
     cropping = ImageRatioField('image', '150x150')
+    project = models.ForeignKey('project.Project', on_delete=models.CASCADE, default=1)
 
     @property
     def small_image_url(self):
