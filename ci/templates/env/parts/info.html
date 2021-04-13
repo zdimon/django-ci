@@ -45,7 +45,7 @@
     </li>
     
     <li class="list-group-item">
-        <div class="btn-group" role="group" >
+        
             <a 
             data-toggle="modal" data-target="#gitpullModal"
             data-id="{{ env.id }}" class="git-pull btn btn-primary" href="#">git pull</a>
@@ -59,7 +59,7 @@
 
             <a class="git-commit btn btn-warning" href="/env/build_front/{{env.id}}">Собрать фронтенд</a>
             
-        </div>
+        
     </li>
     <li class="list-group-item">
         <a class="btn btn-lg btn-outline-danger btn-block" href="/env/pre_remove/{{ env.id }}">Удалить область</a>                            
