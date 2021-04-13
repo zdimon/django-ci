@@ -64,7 +64,7 @@ def frontend_conf(project_id):
             tpl = tpl.replace('%prj_dir%', prj_dir)
             tpl = tpl.replace('%ci_dir%', str(settings.BASE_DIR))
             tpl = tpl.replace('%command%', pp.command)
-            filename = '%s-frontend.conf' % project.name
+            filename = 'release-%s-frontend.conf' % project.name
             conf_path = os.path.join(
                 settings.BASE_DIR, 'env-conf', 'supervisor', filename)
             with open(conf_path, 'w+') as f:
