@@ -20,7 +20,7 @@ def list(request):
 @login_required
 def detail(request, id):
     env = Environ.objects.get(pk=id)
-    envs = Environ.objects.all()
+    envs = Environ.objects.all().exclude(id=id)
     tasks = []
     mytasks = []
     tmptasks = Task.objects.filter(project=env.project)
