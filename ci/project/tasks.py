@@ -20,7 +20,7 @@ def clear_origin(poj_id):
 def make_release_server(poj_id):
     release_django_conf(poj_id)
     release_nginx_conf(poj_id)
-    frontend_conf(poj_id)
+    # frontend_conf(poj_id)
     restart()
 
 @task()

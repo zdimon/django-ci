@@ -32,7 +32,7 @@ def generate_env(env_id):
     git_clone(env_id)
     git_create_branch(env_id)
     django_conf(env_id)
-    frontend_conf(env_id)
+    # frontend_conf(env_id)
     nginx_conf(env_id)
     restart()
     env.status = 'активная'
