@@ -60,7 +60,7 @@ def frontend_conf(project_id):
             sname = 'release-%s.frontend.%s' % (project.name, settings.DOMAIN)
             tpl = tpl.replace('%name%', sname)
             tpl = tpl.replace('%user%', settings.USER)
-            prj_dir = os.path.join(settings.WORK_DIR, project.name, pp.path)
+            prj_dir = os.path.join(settings.ORIGIN_DIR, project.name, pp.path)
             tpl = tpl.replace('%prj_dir%', prj_dir)
             tpl = tpl.replace('%ci_dir%', str(settings.BASE_DIR))
             tpl = tpl.replace('%command%', pp.command)
