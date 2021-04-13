@@ -24,6 +24,15 @@ def restart():
 
 
 @task()
+def build_front(ep_id):
+    from .models import EnvironProcess
+    ep = EnvironProcess.objects.get(pk=ep_id)
+    path = os.path.join(settings.WORK_DIR, ep.env.name, ep.path)
+    os.chdir(path)
+    run_command(ep.command)
+
+
+@task()
 def generate_env(env_id):
     from .models import Environ
     env = Environ.objects.get(pk=env_id)

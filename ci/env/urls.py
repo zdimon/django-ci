@@ -8,4 +8,5 @@ urlpatterns = [
     path('remove/<int:id>', remove),
     path('detail/<int:id>', detail),
     path('create/<int:id>', create),
+    path('build_front/<int:id>', do_build_front),
 ]

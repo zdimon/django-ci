@@ -4,7 +4,7 @@ from project.models import Project, ProjectProcess
 from .models import Environ, EnvironProcess
 from django.shortcuts import redirect
 from django.contrib import messages
-from .tasks import generate_env, create_env
+from .tasks import generate_env, create_env, build_front
 from git import Repo
 import os
 from django.conf import settings
@@ -34,6 +34,14 @@ def detail(request, id):
     print(tmptasks)
     commits = Commit.objects.filter(user=request.user)
     return render(request, 'env/detail.html', {'env': env, 'envs': envs, 'tasks': tasks, 'commits': commits, 'mytasks': mytasks, 'ssh_login':settings.SSH_LOGIN, 'ssh_password': settings.SSH_PASSWORD, 'domain': settings.DOMAIN, "ssh_port": settings.SSH_PORT})
+
+
+
+@login_required
+def do_build_front(request, id):
+    env = Environ.objects.get(pk=id)
+    for ep in EnvironProcess.objects.filter(env=env):
+        build_front.delay(ep.id)
 
 
 @login_required
