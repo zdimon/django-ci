@@ -32,7 +32,7 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         {% for e in envs %}
-                            <a class="dropdown-item" href="/env/detail/{{env.id}}">{{ env.project.title }}</a>
+                            <a class="dropdown-item" href="/env/detail/{{env.id}}">{{ e.project.title }}</a>
                         {% endfor %}
                          
                         </div>
