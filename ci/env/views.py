@@ -40,7 +40,7 @@ def detail(request, id):
 @login_required
 def do_build_front(request, id):
     env = Environ.objects.get(pk=id)
-    for ep in EnvironProcess.objects.filter(env=env):
+    for ep in EnvironProcess.objects.filter(env=env,name='frontend'):
         build_front.delay(ep.id)
     messages.success(
         request, 'Сборка запущена. Это может занять 1-2 мин!')
