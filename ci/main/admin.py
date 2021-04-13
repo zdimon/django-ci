@@ -16,7 +16,7 @@ class EnvAdmin(admin.ModelAdmin):
 
 @admin.register(Maket)
 class MaketAdmin(admin.ModelAdmin):
-    list_display = ['title', 'image']
+    list_display = ['title', 'image', 'project']
 
 
 @admin.register(Task)
