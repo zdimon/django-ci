@@ -40,10 +40,15 @@ def detail(request, id):
 @login_required
 def do_build_front(request, id):
     env = Environ.objects.get(pk=id)
+    cnt = 0
     for ep in EnvironProcess.objects.filter(env=env,name='frontend'):
         build_front.delay(ep.id)
-    messages.success(
-        request, 'Сборка запущена. Это может занять 1-2 мин!')
+    if cnt > 0:
+        messages.success(
+            request, 'Сборка запущена. Это может занять 1-2 мин!')
+    else:
+        messages.success(
+            request, 'Этот проект не включает фронтенд!')        
     return redirect('/env/detail/%s' % id)
 
 
