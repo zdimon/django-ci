@@ -46,7 +46,7 @@ def frontend_conf(env_id):
             with open(conf_path, 'w+') as f:
                 f.write(tpl)
     except Exception as e:
-        print('Error in creating frontend supervisor conf!!!!!')
+        print('Error in creating frontend supervisor conf!!!!! %s - %s' % (envp.path, envp.id))
         print(e)
 
         
