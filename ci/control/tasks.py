@@ -23,19 +23,19 @@ def git_commit(env_id):
     path = os.path.join(settings.WORK_DIR, env.name)
     repo = Repo(path)
     t = repo.head.commit.tree
-    if repo.git.diff(t):
-        print('Make commit')
-        repo.git.add(update=True)
-        comment = 'commit from %s project %s' % (env.user.username, env.project.name)
-        r = repo.index.commit(comment)
-        env.state = 'edited'
-        env.save()
-        save_commit(comment, env.user)
-        os.chdir(path)
-        out = run_command('git push')
-        return {"error": None, "output": f'Данные закомичены. {out["output"]} '}
-    else:
-        return {"error": None, "output": 'Нечего комитить.'}
+    #if repo.git.diff(t):
+    print('Make commit')
+    repo.git.add(update=True)
+    comment = 'commit from %s project %s' % (env.user.username, env.project.name)
+    r = repo.index.commit(comment)
+    env.state = 'edited'
+    env.save()
+    save_commit(comment, env.user)
+    os.chdir(path)
+    out = run_command('git push')
+    return {"error": None, "output": f'Данные закомичены. {out["output"]} '}
+    # else:
+    #     return {"error": None, "output": 'Нечего комитить.'}
 
     #print(r)
     # os.chdir(path)
