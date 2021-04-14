@@ -42,6 +42,7 @@ def do_build_front(request, id):
     env = Environ.objects.get(pk=id)
     cnt = 0
     for ep in EnvironProcess.objects.filter(env=env,name='frontend'):
+        cnt = cnt + 1
         build_front.delay(ep.id)
     if cnt > 0:
         messages.success(
