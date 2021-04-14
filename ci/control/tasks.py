@@ -29,7 +29,7 @@ def git_commit(env_id):
         r = repo.index.commit(comment)
         env.state = 'edited'
         env.save()
-        save_commit(comment, env.user)
+        save_commit(comment, env)
         return {"error": None, "output": 'Данные закомичены.'}
     else:
         return {"error": None, "output": 'Нечего комитить.'}

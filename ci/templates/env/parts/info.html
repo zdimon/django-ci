@@ -3,13 +3,12 @@
     <li class="list-group-item">
     <a class="btn btn-primary" target=_blank href="{{ env.link_url }}">Ссылка для тестирования </a>
 
-    {% if env.project.release_url %}
-    
-        <a 
-        class="git-push btn btn-success"
-        target=_blank href="{{ env.project.release_url }}">Ссылка на релиз</a>
-    
-    {% endif %}
+    <a class="clear-log btn btn-success" data-toggle="modal" data-target="#gitpullModal"
+    data-id="{{ env.id }}" href="#">Перезапустить сервер</a>
+    <a class="get-log btn btn-danger" data-toggle="modal" data-target="#gitpullModal"
+    data-id="{{ env.id }}" href="#">Посмотреть лог ошибок</a>  
+
+
     </li>
 
    
@@ -43,6 +42,16 @@
     <li class="list-group-item">
         Рабочий каталог: <strong>{{ env.get_work_dir }}</strong>
     </li>
+
+    <li class="list-group-item">
+     {% if env.project.release_url %}
+    
+        <a 
+        class="git-push btn btn-success"
+        target=_blank href="{{ env.project.release_url }}">Ссылка на релиз</a>
+    
+    {% endif %}
+    </li>
     
     <li class="list-group-item">
         
@@ -59,7 +68,7 @@
 
             <a class="git-commit btn btn-warning" href="/env/build_front/{{env.id}}">Собрать фронтенд</a>
             
-        
+
     </li>
     <li class="list-group-item">
         <a class="btn btn-lg btn-outline-danger btn-block" href="/env/pre_remove/{{ env.id }}">Удалить область</a>                            

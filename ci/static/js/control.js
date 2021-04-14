@@ -87,4 +87,39 @@ $( document ).ready(function() {
         }); 
     });
 
+    $('.get-log').on('click', (e) => {
+        id = $(e.target).attr('data-id');
+        console.log(id);
+        $('#git-oper').html('операция: получение лога ошибок');
+        $('#git-pull-result').html('выполняется....');
+        // $('#git-pull-error').html('');
+        const url = `/error/log/${id}`;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: (response) => {
+                $('#git-pull-result').html(response.output);
+                $('#git-pull-error').html(response.erroe);
+                console.log(response)
+            }
+        }); 
+    });
+
+    $('.clear-log').on('click', (e) => {
+        id = $(e.target).attr('data-id');
+        $('#git-oper').html('операция: очистка лога ошибок');
+        $('#git-pull-result').html('выполняется....');
+        // $('#git-pull-error').html('');
+        const url = `/clear/log/${id}`;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: (response) => {
+                $('#git-pull-result').html(response.output);
+                $('#git-pull-error').html(response.erroe);
+                console.log(response)
+            }
+        }); 
+    });
+
 });

@@ -32,7 +32,7 @@ def detail(request, id):
             tasks.append(t)
     print(tasks)
     print(tmptasks)
-    commits = Commit.objects.filter(user=request.user)
+    commits = Commit.objects.filter(user=request.user, project=env.project)
     return render(request, 'env/detail.html', {'env': env, 'envs': envs, 'tasks': tasks, 'commits': commits, 'mytasks': mytasks, 'ssh_login':settings.SSH_LOGIN, 'ssh_password': settings.SSH_PASSWORD, 'domain': settings.DOMAIN, "ssh_port": settings.SSH_PORT})
 
 
