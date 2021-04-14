@@ -30,7 +30,7 @@ def git_commit(env_id):
     r = repo.index.commit(comment)
     env.state = 'edited'
     env.save()
-    save_commit(comment, env.user)
+    save_commit(comment, env)
     os.chdir(path)
     out = run_command('git push')
     return {"error": None, "output": f'Данные закомичены. {out["output"]} '}
