@@ -34,8 +34,8 @@ def git_commit(env_id):
     # repo.git.add(update=True)
     # comment = 'commit from %s project %s' % (env.user.username, env.project.name)
     # r = repo.index.commit(comment)
-    # env.state = 'edited'
-    # env.save()
+    env.state = 'edited'
+    env.save()
     # save_commit(comment, env)
     # os.chdir(path)
     # out = run_command('git push')
