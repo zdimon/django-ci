@@ -18,7 +18,7 @@
   {% for task in tasks %}
     <tr>
       <th scope="row">{{ task.id }}</th>
-      <th scope="row">{{ task.project.title }}</th>
+      <th scope="row">{{ task.project.small_image_tag }}</th>
       <td>
             <p slyle="font-weight: strong"><strong>{{ task.title }}</strong></p>
             <p>{{ task.desc }}</p>
