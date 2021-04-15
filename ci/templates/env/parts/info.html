@@ -71,7 +71,12 @@
 
     </li>
     <li class="list-group-item">
-        <a class="btn btn-lg btn-outline-danger btn-block" href="/env/pre_remove/{{ env.id }}">Удалить область</a>                            
+        <a class="btn btn-lg btn-outline-danger btn-block" href="/env/pre_remove/{{ env.id }}">Удалить область</a>     
+        {% if user.is_superuser %}
+        <a class="git-pull btn btn-primary" href="/env/task/create/{{ env.id }}">
+           Создать задачу
+        </a>
+        {% endif %}                       
     </li>
     <li class="list-group-item">
         После удаления вы всегда можете создать ее заново <a href="/project/list">тут</a>.                           
