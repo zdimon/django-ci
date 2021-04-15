@@ -3,7 +3,7 @@ import os
 import git
 from celery.decorators import task
 import subprocess
-from main.utils import run_command, normalize_email
+from main.utils import run_command, normalize_email, run_command_arr
 from env.models import Environ
 from git import Repo
 from env.utils import save_commit
@@ -24,7 +24,7 @@ def git_commit(env_id):
     os.chdir(path)
     run_command('git add .')
     comment = 'commit from %s project %s' % (env.user.username, env.project.name)
-    run_command('git commit -m "%s"' % comment)
+    run_command_arr(['git', 'commit', '-m', '"%s"' % comment])
     d = run_command('git push')
     print(d)
     # repo = Repo(path)

@@ -19,3 +19,8 @@ def run_command(command):
     process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
     return {"output": format_bstr(output), "error": error}
+
+def run_command_arr(arr):
+    process = subprocess.Popen(arr, stdout=subprocess.PIPE)
+    output, error = process.communicate()
+    return {"output": format_bstr(output), "error": error}
