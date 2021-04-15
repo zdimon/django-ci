@@ -34,6 +34,12 @@
                     <li>4. В любое время делаете запрос на перевод.</li>
                 </ul>
             </p>
+            <p style="font-size: 20px; text-align: center; font-weight: bold">
+                Для начала работы вам необходимо войти в систему, используя аккаунт Google.
+            </p>
+            <p class="container">
+                    <a class="btn btn-lg btn-outline-primary btn-block" href="{% url 'social:begin' 'google-oauth2' %}">Вход</a>
+            </p>
         </div>
         <div class="col-6">
             <div class="text-middle">
@@ -58,12 +64,7 @@
     <div >
 
     
-        <p style="font-size: 20px; text-align: center; font-weight: bold">
-            Для начала работы вам необходимо войти в систему, используя аккаунт Google.
-        </p>
-        <p class="container">
-                <a class="btn btn-lg btn-outline-primary btn-block" href="{% url 'social:begin' 'google-oauth2' %}">Вход</a>
-        </p>
+
     </div>
  </div>
  
