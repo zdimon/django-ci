@@ -15,8 +15,8 @@ from main.models import Task2User, Commit, Task
 def list(request):
     envs = Environ.objects.filter(user=request.user)
     cnt = Environ.objects.filter(user=request.user).count()
-    # if cnt == 1:
-    #     return redirect('/env/detail/%s' $ envs[0].id)
+    if cnt == 1:
+        return redirect('/env/detail/%s' % envs[0].id)
     return render(request, 'env/list.html', {'envs': envs})
 
 
