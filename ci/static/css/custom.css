@@ -3,6 +3,15 @@
 
 }
 
+h1 {
+    font-size: 28px !important;
+}
+
+h3 {
+    font-size: 25px !important;
+}
+
+
 .bold {
    font-weight: bold;
 }
