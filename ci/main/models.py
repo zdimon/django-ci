@@ -75,7 +75,7 @@ class Task(models.Model):
     type = models.CharField(max_length=50, choices=TYPE, default='фронтенд')
     hard = models.CharField(max_length=50, choices=TYPE, default='простая')
     project = models.ForeignKey('project.Project', on_delete=models.CASCADE)
-    desc = HTMLField()
+    desc = HTMLField(null=True, blank=True)
     is_done = models.BooleanField(default=False)
     budget = models.IntegerField(default=0)
 
