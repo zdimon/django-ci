@@ -39,6 +39,8 @@
       <td>
         {% if user.is_authenticated %}
         <a class="btn btn-lg btn-outline-primary btn-block" href="/task/take/{{ task.id }}">Взять в работу</a>
+        {% else %}
+          <p class="text-red">вы не зарегистрированы</p>
         {% endif %}
       </td>
     </tr>
