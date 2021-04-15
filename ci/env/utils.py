@@ -112,7 +112,7 @@ def git_clone(env_id):
     bashCommand = "cp -r %s/. %s" % (path_from, path_to)
     print('Pulling origin')
     os.chdir(path_from)
-    run_command('git pull')
+    run_command('git pull origin release')
     # g = git.cmd.Git(path_from)
     # g.pull()
     print('Coping project')
