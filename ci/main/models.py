@@ -110,7 +110,7 @@ class Maket(models.Model):
 
 
 class File(models.Model):
-    title = models.CharField(verbose_name='Заголовок', max_length=250)
+    title = models.CharField(verbose_name='Заголовок', max_length=250, blank=True, null=True)
     image = ImageCropField(upload_to='files')
     task = models.ForeignKey(
         Task, verbose_name="Задача", on_delete=models.CASCADE)
