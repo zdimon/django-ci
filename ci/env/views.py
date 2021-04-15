@@ -36,7 +36,7 @@ def task_detail(request,id):
 
 @login_required
 def task_create(request,id):
-    env = Environ.objects.get(pk=id)
+    project = Project.objects.get(pk=id)
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
@@ -46,7 +46,7 @@ def task_create(request,id):
             return redirect('/env/task/detail/%s' % task.id)
     else:
         task = Task()
-        task.project = env.project
+        task.project = project
         form = TaskForm(instance=task)
     return render(request, 'env/create_task.html', {"form": form} )
 

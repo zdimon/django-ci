@@ -9,11 +9,11 @@
     data-id="{{ env.id }}" href="#">Посмотреть лог</a>  
 
     {% if user.is_superuser %}
-    <a class="git-pull btn btn-primary" href="/env/task/create/{{ env.id }}">
+    <a class="git-pull btn btn-primary" href="/env/task/create/{{ env.project.id }}">
        Создать задачу
     </a>
     {% endif %}
-    
+
     </li>
 
    
