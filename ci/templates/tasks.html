@@ -35,7 +35,9 @@
         {% endfor %}
       </td>
       <td>
+        {% if user.is_authenticated %}
         <a class="btn btn-lg btn-outline-primary btn-block" href="/task/take/{{ task.id }}">Взять в работу</a>
+        {% endif %}
       </td>
     </tr>
    {% endfor %}

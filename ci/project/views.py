@@ -27,10 +27,11 @@ def make_release(request,id):
     project.save()
     return redirect(f'/control')
 
-@login_required
+
 def list(request):
     projects = Project.objects.all()
     eid = []
-    for e in Environ.objects.filter(user=request.user):
-        eid.append(e.project.id)
+    if request.user.is_authenticated:
+        for e in Environ.objects.filter(user=request.user):
+            eid.append(e.project.id)
     return render(request, 'project/list.html', {"projects": projects, "eid": eid})
