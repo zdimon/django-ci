@@ -39,10 +39,10 @@ def task_create(request,id):
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
-            form.save()
+            task = form.save()
             messages.success(
                 request, 'Задача создана!')
-            return redirect('/env/task/detail/%s' % env.id)
+            return redirect('/env/task/detail/%s' % task.id)
     else:
         task = Task()
         task.project = env.project
