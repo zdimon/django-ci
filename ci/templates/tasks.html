@@ -27,7 +27,9 @@
       <td>
         {% for im in task.file_set.all %}
             <p>
-            {{ im.title }}
+              {% if im.title %}
+                {{ im.title }}
+              {% endif %}
             <a target=_blank href="{{im.image.url}}">
                 <img title="{{ im.title }}" src="{{im.small_image_url}}" />
             </a>
