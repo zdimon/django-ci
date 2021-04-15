@@ -55,8 +55,8 @@ def clear_log(request, id):
     env = Environ.objects.get(pk=id)
     lname = f'{env.name}.django.{settings.DOMAIN}'
     logname = f'{env.name}.django.{settings.DOMAIN}-err.log'
-    path = os.path.join(settings.BASE_DIR,'logs',lname)
-    logpath = os.path.join(settings.BASE_DIR,'logs',logname)
+    path = os.path.join(settings.BASE_DIR, 'logs', lname)
+    logpath = os.path.join(settings.BASE_DIR,'logs', logname)
     command = "sudo supervisorctl -c /etc/supervisor/supervisord.conf stop %s" % lname
     run_command(command)
     

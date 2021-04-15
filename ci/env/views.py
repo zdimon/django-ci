@@ -8,8 +8,8 @@ from .tasks import generate_env, create_env, build_front, merge_release
 from git import Repo
 import os
 from django.conf import settings
-from main.models import Task2User, Commit, Task
-
+from main.models import Task2User, Commit, Task, File
+from .forms import TaskForm, FileForm
 
 @login_required
 def list(request):
@@ -19,6 +19,35 @@ def list(request):
         return redirect('/env/detail/%s' % envs[0].id)
     return render(request, 'env/list.html', {'envs': envs})
 
+@login_required
+def task_detail(request,id):
+    task = Task.objects.get(pk=id)
+    f = File()
+    f.task = task
+    form = FileForm(instance=f)
+    if request.method == 'POST':
+        form = FileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request, 'Файл добавлен.')
+    return render(request, 'env/task_detail.html', {"task": task, "form": form} )
+
+@login_required
+def task_create(request,id):
+    env = Environ.objects.get(pk=id)
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request, 'Задача создана!')
+            return redirect('/env/task/detail/%s' % env.id)
+    else:
+        task = Task()
+        task.project = env.project
+        form = TaskForm(instance=task)
+    return render(request, 'env/create_task.html', {"form": form} )
 
 @login_required
 def detail(request, id):
