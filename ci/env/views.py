@@ -31,6 +31,7 @@ def task_detail(request,id):
             form.save()
             messages.success(
                 request, 'Файл добавлен.')
+            return redirect('/env/task/detail/%s' % task.id)
     return render(request, 'env/task_detail.html', {"task": task, "form": form} )
 
 @login_required
