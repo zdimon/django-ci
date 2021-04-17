@@ -48,22 +48,23 @@
                                 </thead>
                                 {% for env in envs %}
                                     <tr>
-                                        <td scope="row">{{ env.id }}
-                                        <a target="_blank" href="{{ env.link_url }}">Ссылка</a>
-                                        <p>
-                                            {{ env.user }}
-                                            (<strong>{{ env.user.name }}</strong>)
-                                        </p>
-                                        <p>
-                                            {{ env.project.title }}
-                                        </p>
-                                        <p>
-                                            {{ env.get_state_display}}
-                                        </p>
-                                        {% if env.state == 'edited' %}
-                                                <a 
-                                                class="btn-sm btn-warning" href="/env/merge/{{env.id}}">    Смержить</a>
-                                        {% endif %}
+                                        <td scope="row">{{ env.id }}</td>
+                                        <td scope="row">
+                                            <a target="_blank" href="{{ env.link_url }}">Ссылка</a>
+                                            <p>
+                                                {{ env.user }}
+                                                (<strong>{{ env.user.name }}</strong>)
+                                            </p>
+                                            <p>
+                                                {{ env.project.title }}
+                                            </p>
+                                            <p>
+                                                {{ env.get_state_display}}
+                                            </p>
+                                            {% if env.state == 'edited' %}
+                                                    <a 
+                                                    class="btn-sm btn-warning" href="/env/merge/{{env.id}}">    Смержить</a>
+                                            {% endif %}
                                         </td>
                                         
                         
