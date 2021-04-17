@@ -53,7 +53,10 @@
                                     <tr>
                                         <td scope="row">{{ env.id }}</td>
                                         <td scope="row"><a target="_blank" href="{{ env.link_url }}">Ссылка</a></td>
-                                        <td scope="row">{{ env.user }}</td>
+                                        <td scope="row">
+                                            {{ env.user }}
+                                        (<strong>{{ env.user.name }}</strong>)
+                                        </td>
                                         <td scope="row">{{ env.project.title }}</td>
                                         <td scope="row">
                                         {{ env.get_state_display}}
@@ -76,7 +79,10 @@
                                                 <a 
                                                 data-toggle="modal" data-target="#gitpullModal"
                                                 data-id="{{ env.id }}" class="git-diff btn-sm  btn-info" href="#">git diff</a>
-                                            
+                                                <a 
+                                                data-toggle="modal" data-target="#gitpullModal"
+                                                href="/env/pre_remove/{{ env.id }}"
+                                                class="get-log btn-sm  btn-warning" href="#">Лог</a>                                            
                                             <a 
                                              href="/env/pre_remove/{{ env.id }}"
                                              class="git-diff btn-sm  btn-danger" href="#">Удалить</a>
