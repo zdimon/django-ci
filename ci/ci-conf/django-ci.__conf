@@ -1,4 +1,4 @@
-[program:django-ci]
+[program:ci-django]
 directory = /home/zdimon/web/django-ci/ci
 command = /home/zdimon/web/django-ci/ci/venv/bin/python3 manage.py runserver 0.0.0.0:8081
 autostart = true
@@ -8,7 +8,17 @@ stderr_logfile=/home/zdimon/web/django-ci/ci/logs/django-ci-err.log
 stdout_logfile=/home/zdimon/web/django-ci/ci/logs/django-ci-out.log
 user=root
 
-[program:celery-ci]
+[program:ci-socket]
+directory = /home/zdimon/web/django-ci/ci
+command = /home/zdimon/web/django-ci/ci/venv/bin/python3 manage.py socket_server
+autostart = true
+autorestart = true
+environment=PYTHONPATH="/home/zdimon/web/django-ci/ci/venv"
+stderr_logfile=/home/zdimon/web/django-ci/ci/logs/django-ci-err.log
+stdout_logfile=/home/zdimon/web/django-ci/ci/logs/django-ci-out.log
+user=root
+
+[program:ci-celery]
 directory = /home/zdimon/web/django-ci/ci
 command = /home/zdimon/web/django-ci/ci/venv/bin/celery -A ci worker -l info
 autostart = true
