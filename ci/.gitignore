@@ -9,3 +9,4 @@ __pycache__
 *.pyc
 media
 env-conf
+ci/static/node_modules
