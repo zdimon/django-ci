@@ -36,16 +36,16 @@ urlpatterns = [
     path('task/end/<int:id>', end_task),
     path('set/language', set_language),
     #path('env/merge/<int:id>', merge_master),
-    path('', include('account.urls')),
-    path('', include('control.urls')),
-    path('project/', include('project.urls')),
-    path('env/', include('env.urls')),
     path('tinymce/', include('tinymce.urls')),
     path('rosetta/', include('rosetta.urls')),
 ]
 
 urlpatterns += i18n_patterns(
-  path('', index),
+    path('', index),
+    path('', include('account.urls')),
+    path('', include('control.urls')),
+    path('project/', include('project.urls')),
+    path('env/', include('env.urls')),
 )
 
 
