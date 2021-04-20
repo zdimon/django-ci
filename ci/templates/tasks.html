@@ -23,7 +23,7 @@
             <p slyle="font-weight: strong"><strong>{{ task.title }}</strong></p>
             <p>{{ task.desc }}</p>
             <p>
-              Бюджет: <strong>{{ task.budget }} грн.</strong>
+              {% translate "Budget" %}: <strong>{{ task.budget }} $.</strong>
             </p>
       </td>
       <td>
@@ -40,7 +40,7 @@
       </td>
       <td>
         {% if user.is_authenticated %}
-        <a class="btn btn-lg btn-outline-primary btn-block" href="/task/take/{{ task.id }}">Взять в работу</a>
+        <a class="btn btn-lg btn-outline-primary btn-block" href="/task/take/{{ task.id }}">{% translate "Take it" %}</a>
         {% else %}
           <p class="text-red">{% translate "you are not registered" %}</p>
         {% endif %}
