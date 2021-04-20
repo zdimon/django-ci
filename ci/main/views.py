@@ -34,8 +34,8 @@ def set_language(request):
             request.session['django_language'] = lang_code
         response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
         activate(lang_code)
-    # return redirect('/%s/' % lang_code)
-    return response
+    return redirect('/%s/' % lang_code)
+    # return response
 
 
 def logout_view(request):
