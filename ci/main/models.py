@@ -66,19 +66,19 @@ pre_delete.connect(pre_delete_handler, sender=Env)
 class Task(models.Model):
 
     TYPE = (
-        ("бекенд", "бекенд"),
-        ("фронтенд", "фронтенд"),
+        ("backend", _("backend")),
+        ("frontend", _("frontend")),
     )
 
     HARD = (
-        ("простая", "простая"),
-        ("средняя", "средняя"),
-        ("сложная", "сложная"),
+        "simple", _("simple")),
+        ("middle", _("middle")),
+        ("hard", _("hard")),
     )
 
     title = models.CharField(max_length=250)
     type = models.CharField(max_length=50, choices=TYPE, default='фронтенд')
-    hard = models.CharField(max_length=50, choices=TYPE, default='простая')
+    hard = models.CharField(max_length=50, choices=HARD, default='простая')
     project = models.ForeignKey('project.Project', on_delete=models.CASCADE)
     desc = HTMLField(null=True, blank=True)
     is_done = models.BooleanField(default=False)
@@ -87,16 +87,16 @@ class Task(models.Model):
     @property
     def get_status(self):
         if self.is_done:
-            return 'не выполнено'
+            return _('not done')
         else:
-            return 'выполнено'
+            return _('done')
 
     def __str__(self):
         return self.title
 
 
 class Maket(models.Model):
-    title = models.CharField(verbose_name='Заголовок', max_length=250)
+    title = models.CharField(verbose_name=_('Title'), max_length=250)
     image = ImageCropField(upload_to='files')
     cropping = ImageRatioField('image', '150x150')
     project = models.ForeignKey('project.Project', on_delete=models.CASCADE, default=1)
@@ -115,10 +115,10 @@ class Maket(models.Model):
 
 
 class File(models.Model):
-    title = models.CharField(verbose_name='Заголовок', max_length=250, blank=True, null=True)
+    title = models.CharField(verbose_name=_('Title'), max_length=250, blank=True, null=True)
     image = ImageCropField(upload_to='files')
     task = models.ForeignKey(
-        Task, verbose_name="Задача", on_delete=models.CASCADE)
+        Task, verbose_name=_("Task"), on_delete=models.CASCADE)
     cropping = ImageRatioField('image', '80x80')
 
     @property
@@ -135,9 +135,9 @@ class File(models.Model):
 
 class Task2User(models.Model):
     user = models.ForeignKey("account.Customer", verbose_name=_(
-        "Пользователь"), on_delete=models.CASCADE)
+        "User"), on_delete=models.CASCADE)
     task = models.ForeignKey(Task, verbose_name=_(
-        "Задача"), on_delete=models.CASCADE)
+        "Task"), on_delete=models.CASCADE)
     is_done = models.BooleanField(default=False)
     project = models.ForeignKey('project.Project', on_delete=models.CASCADE)
 
@@ -150,17 +150,16 @@ class Task2User(models.Model):
 
 
 class Commit(models.Model):
-    user = models.ForeignKey("account.Customer", verbose_name=_(
-        "Пользователь"), on_delete=models.CASCADE)
+    user = models.ForeignKey("account.Customer", verbose_name=_("User"), on_delete=models.CASCADE)
     task = models.ForeignKey(Task, verbose_name=_(
-        "Задача"), on_delete=models.CASCADE, null=True, blank=True)
+        "Tsk"), on_delete=models.CASCADE, null=True, blank=True)
     project = models.ForeignKey(Project, verbose_name=_(
-        "Задача"), on_delete=models.CASCADE, null=True, blank=True)
+        "Task"), on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     title = models.CharField(verbose_name='Заголовок', max_length=250)
 
 class Log(models.Model):
     user = models.ForeignKey("account.Customer", verbose_name=_(
-        "Пользователь"), on_delete=models.CASCADE)
-    action = models.CharField(verbose_name='Действие', max_length=250)
+        "User"), on_delete=models.CASCADE)
+    action = models.CharField(verbose_name=_('Action'), max_length=250)
     created_at = models.DateTimeField(auto_now_add=True)
