@@ -197,7 +197,6 @@ STATIC_ROOT = os.getenv(
     'STATIC_ROOT', False)
 
 if not STATIC_ROOT:
-    print('ssssssssssssssssssss')
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, "static")
     ]
