@@ -21,7 +21,7 @@
       <th scope="row">{{ task.project.small_image_tag }}</th>
       <td>
             <p slyle="font-weight: strong"><strong>{{ task.title }}</strong></p>
-            <p>{{ task.desc }}</p>
+            <p>{{ task.desc|safe }}</p>
             <p>
               {% translate "Budget" %}: <strong>{{ task.budget }} $.</strong>
             </p>
