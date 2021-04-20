@@ -15,7 +15,7 @@ class PageAdmin(admin.ModelAdmin):
 class EnvAdmin(admin.ModelAdmin):
     list_display = ['email', 'link']
 
-
+ 
 
 
 @admin.register(Maket)
