@@ -19,9 +19,8 @@ from env.models import Environ
 from django.utils import translation
 
 def set_language(request):
-    if request.method == 'GET':
-        lang_code = request.GET.get('language', None)
-        translation.activate(lang_code)
+    lang_code = request.GET.get('language', None)
+    translation.activate(lang_code)
     return redirect('/')
 
 
