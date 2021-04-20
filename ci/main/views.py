@@ -17,25 +17,24 @@ import os
 from django.contrib.auth.decorators import login_required
 from env.models import Environ
 from django.utils import translation
-from django.utils.translation import check_for_language
+from django.utils.translation import check_for_language, get_language
+from django.utils.http import is_safe_url
 
 
 def set_language(request):
-    next = request.GET.get('next', None)
-    if not next:
-        next = request.META.get('HTTP_REFERER', None)
-    if not next:
-        next = '/'
-    response = HttpResponseRedirect(next)
-    if request.method == 'GET':
-        lang_code = request.GET.get('language', None)
-        #if lang_code and check_for_language(lang_code):
+    from django.utils.translation import activate
+    lang_code = request.GET.get('language', 'en')
+    lang = get_language()
+    if not lang_code:
+        lang_code = request.GET.get('lang_code', settings.LANGUAGE_CODE)
+    next_url = request.META.get('HTTP_REFERER', '')
+    response = HttpResponseRedirect(next_url)
+    if lang_code and check_for_language(lang_code):
         if hasattr(request, 'session'):
             request.session['django_language'] = lang_code
-        else:
-            response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
-        translation.activate(lang_code)
-    return response
+        response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
+        activate(lang_code)
+    return redirect('/%s/' % lang_code)
 
 
 def logout_view(request):
