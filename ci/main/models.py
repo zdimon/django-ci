@@ -71,7 +71,7 @@ class Task(models.Model):
     )
 
     HARD = (
-        "simple", _("simple")),
+        ("simple", _("simple")),
         ("middle", _("middle")),
         ("hard", _("hard")),
     )
