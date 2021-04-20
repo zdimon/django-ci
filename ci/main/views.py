@@ -1,5 +1,5 @@
 import json
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from .forms import EnvForm
@@ -17,11 +17,25 @@ import os
 from django.contrib.auth.decorators import login_required
 from env.models import Environ
 from django.utils import translation
+from django.utils.translation import check_for_language
+
 
 def set_language(request):
-    lang_code = request.GET.get('language', None)
-    translation.activate(lang_code)
-    return redirect('/%s/' % lang_code)
+    next = request.REQUEST.get('next', None)
+    if not next:
+        next = request.META.get('HTTP_REFERER', None)
+    if not next:
+        next = '/'
+    response = HttpResponseRedirect(next)
+    if request.method == 'GET':
+        lang_code = request.GET.get('language', None)
+        if lang_code and check_for_language(lang_code):
+            if hasattr(request, 'session'):
+                request.session['django_language'] = lang_code
+            else:
+                response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
+            translation.activate(lang_code)
+    return response
 
 
 def logout_view(request):
