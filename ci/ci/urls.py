@@ -45,7 +45,7 @@ urlpatterns += i18n_patterns(
     path('', include('control.urls')),
     path('project/', include('project.urls')),
     path('env/', include('env.urls')),
-    path('tasks', tasks),
+    path('tasks', tasks, name='task-list'),
 )
 
 
