@@ -73,7 +73,7 @@ def env(request):
 def index(request):
     page = Page.objects.get(alias='main')
     if request.user.is_authenticated:
-        return redirect('/%s/project/list' % request.LANGUAGE_CODE)
+        return redirect('project/list')
     projects = Project.objects.all()
     return render(request, 'index.html', {"projects": projects, 'page':page})
 
