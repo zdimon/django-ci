@@ -200,7 +200,7 @@ if not STATIC_ROOT:
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, "static")
     ]
-LOCALE_PATHS = os.path.join(BASE_DIR, "locale")
+LOCALE_PATHS = [os.path.join(BASE_DIR, "locale")]
 LOGIN_URL = '/login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/logout'
