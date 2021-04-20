@@ -76,6 +76,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware'
 ]
 
 ROOT_URLCONF = 'ci.urls'
@@ -196,6 +197,7 @@ STATIC_ROOT = os.getenv(
     'STATIC_ROOT', False)
 
 if not STATIC_ROOT:
+    print('ssssssssssssssssssss')
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, "static")
     ]

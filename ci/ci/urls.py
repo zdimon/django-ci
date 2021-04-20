@@ -18,10 +18,9 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from main.views import index, done, logout_view, env, tasks, take_task, del_task, done_task, end_task, instr, hook, merge_master, maket, set_language
-
+from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
-    path('', index),
     path('done/<int:id>', done),
     path('admin/', admin.site.urls),
     path('', include('social_django.urls', namespace='social')),
@@ -44,6 +43,11 @@ urlpatterns = [
     path('tinymce/', include('tinymce.urls')),
     path('rosetta/', include('rosetta.urls')),
 ]
+
+urlpatterns += i18n_patterns(
+  path('', index),
+)
+
 
 
 urlpatterns = urlpatterns + static(settings.MEDIA_URL,

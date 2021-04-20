@@ -20,8 +20,8 @@ from django.utils import translation
 
 def set_language(request):
     lang_code = request.GET.get('language', None)
-    translation.activate('ru')
-    return redirect('/')
+    translation.activate(lang_code)
+    return redirect('/%s/' % lang_code)
 
 
 def logout_view(request):
