@@ -1,17 +1,17 @@
- 
- {% extends 'base.html' %}
- {% block content %}
- <h4>Задачи на выполнение</h4>
+{% load i18n %} 
+{% extends 'base.html' %}
+{% block content %}
+ <h4>{% translate "Current tasks" %}</h4>
 
 
  <table class="table">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Проект</th>
-      <th scope="col">Описание</th>
-      <th scope="col">Изображения</th>
-      <th scope="col">Действия</th>
+      <th scope="col">{% translate "Project" %}</th>
+      <th scope="col">{% translate "Description" %}</th>
+      <th scope="col">{% translate "Image" %}</th>
+      <th scope="col">{% translate "Actions" %}</th>
     </tr>
   </thead>
   <tbody>
@@ -42,7 +42,7 @@
         {% if user.is_authenticated %}
         <a class="btn btn-lg btn-outline-primary btn-block" href="/task/take/{{ task.id }}">Взять в работу</a>
         {% else %}
-          <p class="text-red">вы не зарегистрированы</p>
+          <p class="text-red">{% translate "you are not registered" %}</p>
         {% endif %}
       </td>
     </tr>
