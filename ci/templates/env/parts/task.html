@@ -1,3 +1,15 @@
+<div class="row" style="padding-top: 10px">
+    <div class="col-10"></div>
+    <div class="col-2">
+        {% if user.is_superuser %}
+        <a class="git-pull btn btn-primary" href="/env/task/create/{{ env.project.id }}">
+           Создать задачу
+        </a>
+        {% endif %}
+    </div>
+    
+</div>
+
 <table class="table">
     <thead>
         <tr>
@@ -10,13 +22,14 @@
 
         {% for task in tasks %}
             <tr>
-            <th scope="row">{{ task.id }}
-
-             
-            </th>
+            <th scope="row">{{ task.id }}</th>
             <td>
-                    <p slyle="font-weight: strong"><strong>{{ task.title }}</strong></p>
+                    <p slyle="font-weight: strong"><strong>
+                    <a href="/env/task/detail/{{ task.id }}">{{ task.title }}</a>    
+                    </strong></p>
+                    <a href="/env/task/detail/{{ task.id }}">
                     {{ task.desc }}
+                    </a>
                     <p>
                         Статус: {{ task.get_status }}
                     </p>
@@ -28,7 +41,9 @@
             <td>
                 {% for im in task.file_set.all %}
                     <p>
-                    <p>{{ im.title }}</p>
+                    {% if im.title %}
+                        <p>{{ im.title }}</p>
+                    {% endif %}
                     <a target=_blank href="{{im.image.url}}">
                         <img title="{{ im.title }}" src="{{im.small_image_url}}" />
                     </a>

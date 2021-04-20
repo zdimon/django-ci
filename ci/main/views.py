@@ -70,8 +70,6 @@ def hook(request):
 
 
 def tasks(request):
-    if not request.user.is_authenticated:
-        return redirect('/')
     tasks = Task.objects.filter(is_done=False).order_by('-id')
     return render(request, 'tasks.html', {"tasks": tasks})
 

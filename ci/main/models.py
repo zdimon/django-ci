@@ -13,7 +13,7 @@ from easy_thumbnails.files import get_thumbnailer
 from image_cropping.fields import ImageRatioField, ImageCropField
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import mark_safe
-
+from tinymce.models import HTMLField
 
 
 class Env(models.Model):
@@ -75,7 +75,7 @@ class Task(models.Model):
     type = models.CharField(max_length=50, choices=TYPE, default='фронтенд')
     hard = models.CharField(max_length=50, choices=TYPE, default='простая')
     project = models.ForeignKey('project.Project', on_delete=models.CASCADE)
-    desc = models.TextField()
+    desc = HTMLField(null=True, blank=True)
     is_done = models.BooleanField(default=False)
     budget = models.IntegerField(default=0)
 
@@ -110,7 +110,7 @@ class Maket(models.Model):
 
 
 class File(models.Model):
-    title = models.CharField(verbose_name='Заголовок', max_length=250)
+    title = models.CharField(verbose_name='Заголовок', max_length=250, blank=True, null=True)
     image = ImageCropField(upload_to='files')
     task = models.ForeignKey(
         Task, verbose_name="Задача", on_delete=models.CASCADE)

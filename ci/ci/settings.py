@@ -45,14 +45,26 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'control',
     'project',
-    'env'
+    'env',
+     'tinymce',
 ]
+
+TINYMCE_DEFAULT_CONFIG = {
+	'plugins': 'paste',
+	'paste_remove_styles': 'true',
+	'paste_remove_styles_if_webkit': 'true',
+	'paste_strip_class_attributes': 'all',
+}
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -133,11 +145,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
+#STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+
+#STATICFILES_DIRS = ( os.path.join('static'), )
 load_dotenv()
 
 DEBUG = os.getenv('DEBUG', False)

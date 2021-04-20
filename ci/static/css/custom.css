@@ -3,17 +3,29 @@
 
 }
 
+h1 {
+    font-size: 28px !important;
+}
+
+h3 {
+    font-size: 25px !important;
+}
+
+.text-red {
+    color: red;
+}
+
 .bold {
    font-weight: bold;
 }
 
 
 .big-text {
-    font-size: 28px;
+    font-size: 22px;
 }
 
 .middle-text {
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .bg-red {
@@ -26,4 +38,12 @@
 
 .table td, .table th {
     border-top: 0px !important;
+}
+
+.text-middle {
+    font-size: 18px;
+}
+
+a.gal-img {
+    padding: 5px;
 }

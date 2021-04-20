@@ -42,26 +42,32 @@
                                 <thead>
                                     <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Ссылка</th>
-                                    <th scope="col">Пользователь</th>
-                                    <th scope="col">Проект</th>
-                                    <th scope="col">Статус</th>
+                                    <th scope="col">Инфо</th>
                                     <th scope="col">Действия</th>
                                     </tr>
                                 </thead>
                                 {% for env in envs %}
                                     <tr>
                                         <td scope="row">{{ env.id }}</td>
-                                        <td scope="row"><a target="_blank" href="{{ env.link_url }}">Ссылка</a></td>
-                                        <td scope="row">{{ env.user }}</td>
-                                        <td scope="row">{{ env.project.title }}</td>
                                         <td scope="row">
-                                        {{ env.get_state_display}}
-                                        {% if env.state == 'edited' %}
-                                                <a 
-                                                class="btn-sm btn-warning" href="/env/merge/{{env.id}}">    Смержить</a>
-                                        {% endif %}
+                                            <a target="_blank" href="{{ env.link_url }}">Ссылка</a>
+                                            <p>
+                                                {{ env.user }}
+                                                (<strong>{{ env.user.name }}</strong>)
+                                            </p>
+                                            <p>
+                                                {{ env.project.title }}
+                                            </p>
+                                            <p>
+                                                {{ env.get_state_display}}
+                                            </p>
+                                            {% if env.state == 'edited' %}
+                                                    <a 
+                                                    class="btn-sm btn-warning" href="/env/merge/{{env.id}}">    Смержить</a>
+                                            {% endif %}
                                         </td>
+                                        
+                        
                                         <td scope="row">
                                             
                                                 <a 
@@ -76,7 +82,10 @@
                                                 <a 
                                                 data-toggle="modal" data-target="#gitpullModal"
                                                 data-id="{{ env.id }}" class="git-diff btn-sm  btn-info" href="#">git diff</a>
-                                            
+                                                <a 
+                                                data-toggle="modal" data-target="#gitpullModal"
+                                                data-id="{{ env.id }}"
+                                                class="get-log btn-sm  btn-warning" href="#">Лог</a>                                            
                                             <a 
                                              href="/env/pre_remove/{{ env.id }}"
                                              class="git-diff btn-sm  btn-danger" href="#">Удалить</a>

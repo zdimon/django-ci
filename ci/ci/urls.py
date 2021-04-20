@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 from main.views import index, done, logout_view, env, tasks, take_task, del_task, done_task, end_task, instr, hook, merge_master, maket
 
+
 urlpatterns = [
     path('', index),
     path('done/<int:id>', done),
@@ -39,8 +40,11 @@ urlpatterns = [
     path('', include('control.urls')),
     path('project/', include('project.urls')),
     path('env/', include('env.urls')),
+    path('tinymce/', include('tinymce.urls')),
 ]
 
 
 urlpatterns = urlpatterns + static(settings.MEDIA_URL,
                                    document_root=settings.MEDIA_ROOT)
+
+# urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

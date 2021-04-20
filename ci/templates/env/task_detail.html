@@ -1,0 +1,96 @@
+ 
+ {% extends 'base.html' %}
+ {% load crispy_forms_tags %}
+ {% block css %}
+ <link rel="stylesheet" href="/static/node_modules/lightgallery.js/dist/css/lightgallery.min.css">
+ {% endblock %}
+
+ {% block js %}
+    <script src="/static/node_modules/lightgallery.js/dist/js/lightgallery.min.js"></script>
+    <script>
+      lightGallery(document.getElementById('lightgallery'));
+  </script>
+ {% endblock %}
+ {% block content %}
+     <div class="container">
+        
+        {% if error %}
+            <div class="alert alert-warning" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+
+            <div class="row">
+              <div class="col-10">
+                <h1>Задача № {{task.id}}</h1>
+              </div>
+              <div class="col-2">
+                <a class="git-pull btn btn-primary" href="/env/task/create/{{ task.project.id }}">
+                  Создать задачу
+               </a>
+              </div>
+            </div>
+
+            <div class="row">
+              <h2>{{ task.title }}</h2>
+            </div>
+            <div class="row text-middle">
+              {{ task.desc|safe }}
+            </div>
+            <h4>Файлы</h4>
+            <div class="row" id="lightgallery">
+              
+              
+              {% for f in task.file_set.all %}
+               
+                  <a class="gal-img" href="{{f.image.url}}">
+                    <img src="{{ f.small_image_url }}" alt="">
+                  </a>
+                
+                 
+              {% endfor %}
+            </div>
+            {% if user.is_superuser %}
+            <div class="row">
+              <form method="POST" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button class="btn btn-success">Добавить изображение</button>
+                {{ form.media }}
+            </form>              
+            </div>
+            {% endif %}
+            <div class="row" style="padding-top: 20px">
+              <a class="btn btn-lg btn-outline-primary btn-block" href="/task/end/{{ task.id }}">Выполнено</a>
+            </div>
+               
+        
+    </div>
+   
+
+
+
+<div class="modal" id="gitpullModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="git-oper"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <p>Результат</p>
+            <p id="git-pull-result"></p>
+            
+        </div>
+        <div class="modal-footer">
+          
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+    {% endblock %}
+

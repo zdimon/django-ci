@@ -25,14 +25,15 @@
                         {{ p.desc|safe }}
                     </td>
                     <td scope="col">
-                    {% if p.id in eid %}
-                        <a 
-                    class="git-pull btn btn-danger" href="/project/pre_remove/{{ p.id }}">Удалить рабочую область</a>
-                    {% else %}
-                        <a 
-                    class="git-pull btn btn-primary" href="/env/pre_create/{{ p.id }}">Создать рабочую область</a>
+                    {% if user.is_authenticated %}
+                        {% if p.id in eid %}
+                            <a 
+                        class="git-pull btn btn-danger" href="/project/pre_remove/{{ p.id }}">Удалить рабочую область</a>
+                        {% else %}
+                            <a 
+                        class="git-pull btn btn-primary" href="/env/pre_create/{{ p.id }}">Создать рабочую область</a>
+                        {% endif %}
                     {% endif %}
-
                     </td>
                 </tr>
             {% endfor %}  

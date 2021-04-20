@@ -3,7 +3,7 @@ import os
 import git
 from celery.decorators import task
 import subprocess
-from main.utils import run_command, normalize_email
+from main.utils import run_command, normalize_email, run_command_arr
 from env.models import Environ
 from git import Repo
 from env.utils import save_commit
@@ -21,19 +21,25 @@ def git_pull(env_id):
 def git_commit(env_id):  
     env = Environ.objects.get(pk=env_id)
     path = os.path.join(settings.WORK_DIR, env.name)
-    repo = Repo(path)
-    t = repo.head.commit.tree
-    #if repo.git.diff(t):
-    print('Make commit')
-    repo.git.add(update=True)
+    os.chdir(path)
+    run_command('git add .')
     comment = 'commit from %s project %s' % (env.user.username, env.project.name)
-    r = repo.index.commit(comment)
+    run_command_arr(['git', 'commit', '-m', '"%s"' % comment])
+    d = run_command('git push')
+    print(d)
+    # repo = Repo(path)
+    # t = repo.head.commit.tree
+    #if repo.git.diff(t):
+    # print('Make commit')
+    # repo.git.add(update=True)
+    # comment = 'commit from %s project %s' % (env.user.username, env.project.name)
+    # r = repo.index.commit(comment)
     env.state = 'edited'
     env.save()
-    save_commit(comment, env)
-    os.chdir(path)
-    out = run_command('git push')
-    return {"error": None, "output": f'Данные закомичены. {out["output"]} '}
+    # save_commit(comment, env)
+    # os.chdir(path)
+    # out = run_command('git push')
+    return {"error": None, "output": f'Данные закомичены. {d["output"]} '}
     # else:
     #     return {"error": None, "output": 'Нечего комитить.'}
 
