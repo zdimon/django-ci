@@ -156,9 +156,8 @@ MEDIA_URL = '/media/'
 
 #STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static")
-]
+
+
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -195,6 +194,11 @@ SOCIAL_AUTH_REDIRECT_IS_HTTPS = os.getenv(
 
 STATIC_ROOT = os.getenv(
     'STATIC_ROOT', False)
+
+if not STATIC_ROOT:
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, "static")
+    ]
 
 LOGIN_URL = '/login'
 LOGIN_REDIRECT_URL = '/'
