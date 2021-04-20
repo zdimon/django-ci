@@ -16,3 +16,5 @@ django-tinymce
 python-socketio
 eventlet
 redis
+django-modeltranslation==0.17.1
+django-rosetta==0.9.6

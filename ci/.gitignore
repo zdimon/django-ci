@@ -10,3 +10,4 @@ __pycache__
 media
 env-conf
 ci/static/node_modules
+ci/locale

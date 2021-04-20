@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,7 +47,8 @@ INSTALLED_APPS = [
     'control',
     'project',
     'env',
-     'tinymce',
+    'tinymce',
+    'rosetta',
 ]
 
 TINYMCE_DEFAULT_CONFIG = {
@@ -96,6 +98,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ci.wsgi.application'
 
+LANGUAGES = (
+    ('ru', 'Russian'),
+    ('en', 'English'),
+)
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases

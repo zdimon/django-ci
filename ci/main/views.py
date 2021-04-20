@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.conf import settings
 from .models import Env
 from .tasks import normalize_email, git_push, git_merge_with_master
-from .models import Env, Task, Task2User, Commit, Maket
+from .models import Env, Task, Task2User, Commit, Maket, Page
 from project.models import Project
 from git import Repo
 from django.shortcuts import redirect
@@ -16,6 +16,14 @@ from django.contrib import messages
 import os
 from django.contrib.auth.decorators import login_required
 from env.models import Environ
+from django.utils import translation
+
+def set_language(request):
+    if request.method == 'GET':
+        lang_code = request.GET.get('language', None)
+        translation.activate(lang_code)
+    return redirect('/')
+
 
 def logout_view(request):
     logout(request)
@@ -51,10 +59,11 @@ def env(request):
 
 
 def index(request):
+    page = Page.objects.get(alias='main')
     if request.user.is_authenticated:
         return redirect('/project/list')
     projects = Project.objects.all()
-    return render(request, 'index.html', {"projects": projects})
+    return render(request, 'index.html', {"projects": projects, 'page':page})
 
 
 def instr(request):

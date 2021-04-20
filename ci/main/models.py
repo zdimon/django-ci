@@ -16,6 +16,11 @@ from django.utils.html import mark_safe
 from tinymce.models import HTMLField
 
 
+class Page(models.Model):
+    title = models.CharField(verbose_name=_('Title'), max_length=250)
+    alias = models.CharField(verbose_name=_('Alias'), max_length=50)
+    content = models.TextField(verbose_name=_('Content'))
+
 class Env(models.Model):
     project = models.ForeignKey('project.Project',on_delete=CASCADE)
     email = models.CharField(verbose_name='Логин', max_length=60, unique=True)

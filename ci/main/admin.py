@@ -6,6 +6,10 @@ class FileInline(admin.TabularInline):
     model = File
     list_display = ['title', 'image', 'thumb']
 
+@admin.register(Page)
+class PageAdmin(admin.ModelAdmin):
+    list_display = ['title', 'content']
+
 
 @admin.register(Env)
 class EnvAdmin(admin.ModelAdmin):
