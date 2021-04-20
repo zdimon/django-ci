@@ -34,7 +34,7 @@
           </div>
           <div class="col-4 d-flex justify-content-end align-items-center">
             <div class="btn-group" role="group" aria-label="Basic example">
-              <a class="btn btn-primary" href="/project/list">{% translate "Projects" %}</a>
+              <a class="btn btn-primary" href="{% url 'project-list' %}">{% translate "Projects" %}</a>
               <a class="btn btn-info" href="{% url 'task-list' %}">{% translate "Tasks" %}</a>
               {% if not user.is_authenticated %}
               
@@ -45,7 +45,7 @@
               
 
               
-              <a class="btn btn-warning" href="/profile">{% translate "Profile" %}</a>
+              <a class="btn btn-warning" href="{% url 'profile' %}">{% translate "Profile" %}</a>
               <a class="btn btn-success" href="/env/list">{% translate "Working places" %}</a>
               {% if user.is_superuser %}
                 <a class="btn btn-secondary" href="/control">{% translate "Control" %}</a>
