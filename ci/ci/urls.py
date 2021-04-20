@@ -26,7 +26,6 @@ urlpatterns = [
     path('', include('social_django.urls', namespace='social')),
     path('logout', logout_view),
     path('env', env),
-    path('tasks', tasks),
     path('instr', instr),
     path('hook', hook),
     path('maket/<int:id>', maket),
@@ -46,6 +45,7 @@ urlpatterns += i18n_patterns(
     path('', include('control.urls')),
     path('project/', include('project.urls')),
     path('env/', include('env.urls')),
+    path('tasks', tasks),
 )
 
 
