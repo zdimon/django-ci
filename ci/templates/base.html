@@ -46,9 +46,9 @@
 
               
               <a class="btn btn-warning" href="{% url 'profile' %}">{% translate "Profile" %}</a>
-              <a class="btn btn-success" href="/env/list">{% translate "Working places" %}</a>
+              <a class="btn btn-success" href="{% url 'env-list' %}">{% translate "Working places" %}</a>
               {% if user.is_superuser %}
-                <a class="btn btn-secondary" href="/control">{% translate "Control" %}</a>
+                <a class="btn btn-secondary" href="{% url 'control' %}">{% translate "Control" %}</a>
                 {% endif %}
               <a class="btn btn-danger" href="/logout">{% translate "Sign Out" %}</a>
               </div>
