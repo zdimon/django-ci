@@ -20,7 +20,7 @@ from django.utils import translation
 
 def set_language(request):
     lang_code = request.GET.get('language', None)
-    translation.activate(lang_code)
+    translation.activate('ru')
     return redirect('/')
 
 
