@@ -1,20 +1,21 @@
  
  {% extends 'base.html' %}
+ {% load i18n %} 
  {% block content %}
  <div class="container">
-        <h2>Мои рабочие области</h2>
+        <h2>{% translate "My working spaces" %}</h2>
         <table class="table">
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Описание</th>
-                    <th scope="col">Статус</th>
-                    <th scope="col">Действия</th>
+                    <th scope="col">{% translate "Description" %}</th>
+                    <th scope="col">{% translate "Status" %}</th>
+                    <th scope="col">{% translate "Actions" %}</th>
                 </tr>
             </thead>
             {% for e in envs %}
                 <tr 
-                {% if e.status == 'создается' %}
+                {% if e.status == 'creating' %}
                 class="bg-red"
                 {% else %}
                 class="bg-green"
@@ -32,9 +33,9 @@
                     <td scope="col">{{ e.status }}</td>
                     <td scope="col">
                         <a 
-                        class="git-pull btn btn-primary" href="/env/detail/{{ e.id }}">Войти</a>
+                        class="git-pull btn btn-primary" href="/env/detail/{{ e.id }}">{% translate "Enter" %}</a>
                         <a 
-                        class="git-pull btn btn-danger" href="/env/pre_remove/{{ e.id }}">Удалить</a>
+                        class="git-pull btn btn-danger" href="/env/pre_remove/{{ e.id }}">{% translate "Delete" %}</a>
 
                     </td>
                 </tr>
@@ -42,7 +43,7 @@
         </table>
         {% if not envs %}
         <div class="alert alert-danger" role="alert">
-            Вы пока не создали ни одну область из раздела "Проекты".
+            {% translate "There are no working spaces." %}
         </div>            
         {% endif %}
         

@@ -1,16 +1,17 @@
  
  {% extends 'base.html' %}
+ {% load i18n %}
  {% block content %}
  <div class="container">
-        <h2>Наши проекты</h2>
+        <h2>{% translate "Projects" %}</h2>
 
         <table class="table">
             <thead>
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col"></th>
-                    <th scope="col">Описание</th>
-                    <th scope="col">Действия</th>
+                    <th scope="col">{% translate "Description" %}</th>
+                    <th scope="col">{% translate "Actions" %}</th>
                 </tr>
             </thead>
             {% for p in projects %}
@@ -28,10 +29,10 @@
                     {% if user.is_authenticated %}
                         {% if p.id in eid %}
                             <a 
-                        class="git-pull btn btn-danger" href="/project/pre_remove/{{ p.id }}">Удалить рабочую область</a>
+                        class="git-pull btn btn-danger" href="/project/pre_remove/{{ p.id }}">{% translate "Delete working space" %}</a>
                         {% else %}
                             <a 
-                        class="git-pull btn btn-primary" href="/env/pre_create/{{ p.id }}">Создать рабочую область</a>
+                        class="git-pull btn btn-primary" href="/env/pre_create/{{ p.id }}">{% translate "Create working space" %}</a>
                         {% endif %}
                     {% endif %}
                     </td>

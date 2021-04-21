@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,7 +47,8 @@ INSTALLED_APPS = [
     'control',
     'project',
     'env',
-     'tinymce',
+    'tinymce',
+    'rosetta',
 ]
 
 TINYMCE_DEFAULT_CONFIG = {
@@ -74,6 +76,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware'
 ]
 
 ROOT_URLCONF = 'ci.urls'
@@ -96,6 +99,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ci.wsgi.application'
 
+LANGUAGES = (
+    ('ru', 'Russian'),
+    ('en', 'English'),
+)
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -130,7 +138,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'UTC'
 
@@ -149,9 +157,8 @@ MEDIA_URL = '/media/'
 
 #STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static")
-]
+
+
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -186,6 +193,14 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv(
 SOCIAL_AUTH_REDIRECT_IS_HTTPS = os.getenv(
     'SOCIAL_AUTH_REDIRECT_IS_HTTPS', False)
 
+STATIC_ROOT = os.getenv(
+    'STATIC_ROOT', False)
+
+if not STATIC_ROOT:
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, "static")
+    ]
+LOCALE_PATHS = [os.path.join(BASE_DIR, "locale")]
 LOGIN_URL = '/login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/logout'

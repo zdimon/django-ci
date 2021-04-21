@@ -6,12 +6,16 @@ class FileInline(admin.TabularInline):
     model = File
     list_display = ['title', 'image', 'thumb']
 
+@admin.register(Page)
+class PageAdmin(admin.ModelAdmin):
+    list_display = ['title', 'content']
+
 
 @admin.register(Env)
 class EnvAdmin(admin.ModelAdmin):
     list_display = ['email', 'link']
 
-
+ 
 
 
 @admin.register(Maket)
@@ -23,7 +27,7 @@ class MaketAdmin(admin.ModelAdmin):
 class TaskAdmin(admin.ModelAdmin):
     list_display = ['title', 'desc', 'is_done', 'project', 'budget']
     inlines = [FileInline, ]
-    list_editable = ['budget']
+    list_editable = ['budget', 'is_done']
     list_filter = ['project']
 
 

@@ -1,5 +1,5 @@
 import json
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from .forms import EnvForm
@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.conf import settings
 from .models import Env
 from .tasks import normalize_email, git_push, git_merge_with_master
-from .models import Env, Task, Task2User, Commit, Maket
+from .models import Env, Task, Task2User, Commit, Maket, Page
 from project.models import Project
 from git import Repo
 from django.shortcuts import redirect
@@ -16,6 +16,27 @@ from django.contrib import messages
 import os
 from django.contrib.auth.decorators import login_required
 from env.models import Environ
+from django.utils import translation
+from django.utils.translation import check_for_language, get_language
+from django.utils.http import is_safe_url
+
+
+def set_language(request):
+    from django.utils.translation import activate
+    lang_code = request.GET.get('language', 'en')
+    lang = get_language()
+    if not lang_code:
+        lang_code = request.GET.get('lang_code', settings.LANGUAGE_CODE)
+    next_url = request.META.get('HTTP_REFERER', '')
+    response = HttpResponseRedirect(next_url)
+    if lang_code and check_for_language(lang_code):
+        if hasattr(request, 'session'):
+            request.session['django_language'] = lang_code
+        response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
+        activate(lang_code)
+    return redirect('/%s/' % lang_code)
+    # return response
+
 
 def logout_view(request):
     logout(request)
@@ -51,10 +72,11 @@ def env(request):
 
 
 def index(request):
+    page = Page.objects.get(alias='main')
     if request.user.is_authenticated:
-        return redirect('/project/list')
+        return redirect('/%s/project/list' % request.LANGUAGE_CODE)
     projects = Project.objects.all()
-    return render(request, 'index.html', {"projects": projects})
+    return render(request, 'index.html', {"projects": projects, 'page':page})
 
 
 def instr(request):
