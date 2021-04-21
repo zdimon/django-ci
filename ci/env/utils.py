@@ -61,8 +61,8 @@ def django_conf(env_id):
     sname = '%s.django.%s' % (env.name, settings.DOMAIN)
     tpl = tpl.replace('%name%', sname)
     tpl = tpl.replace('%port%', str(envp.port))
-    if env.project.venv_path:
-        prj_dir = os.path.join(settings.WORK_DIR, env.name, env.project.venv_path)
+    if envp.path:
+        prj_dir = os.path.join(settings.WORK_DIR, env.name, envp.path)
     else:
         prj_dir = os.path.join(settings.WORK_DIR, env.name)
     
